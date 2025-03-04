@@ -3,13 +3,21 @@ import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
 const generateTokens = (user) => {
-  const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "30m",
-  });
+  const accessToken = jwt.sign(
+    { id: user._id },
+    process.env.JWT_ACCESS_SECRET,
+    {
+      expiresIn: "30m",
+    }
+  );
 
-  const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
-  });
+  const refreshToken = jwt.sign(
+    { id: user._id },
+    process.env.JWT_REFRESH_SECRET,
+    {
+      expiresIn: "1d",
+    }
+  );
 
   return { accessToken, refreshToken };
 };
@@ -197,10 +205,13 @@ export const updateUser = async (req, res) => {
     user.age = age || user.age;
     user.weight = weight || user.weight;
     user.height = height || user.height;
-    user.location = {
-      type: "Point",
-      coordinates: [longitude, latitude],
-    };
+    if (latitude !== undefined && longitude !== undefined) {
+      user.location = {
+        type: "Point",
+        coordinates: [longitude, latitude],
+      };
+    }
+    console.log(user);
 
     await user.save();
 

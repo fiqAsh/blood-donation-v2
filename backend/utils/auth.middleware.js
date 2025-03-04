@@ -12,7 +12,7 @@ const authenticateUser = async (req, res, next) => {
         .json({ message: "Access Denied. No token provided." });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
 
     req.user = await User.findById(decoded.id).select("-password");
 
