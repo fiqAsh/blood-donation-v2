@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    bloodGroup: {
+      type: String,
+      required: true,
+    },
     location: {
       type: {
         type: String,
