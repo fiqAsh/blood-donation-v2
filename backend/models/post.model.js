@@ -16,6 +16,19 @@ const postSchema = new mongoose.Schema(
     },
     pending: { type: Boolean, default: true },
 
+    urgency: {
+      type: String,
+      enum: ["high", "medium", "low"],
+      default: "low",
+    },
+
+    canceled: { type: Boolean, default: false },
+    canceledAt: {
+      type: Date,
+      default: null,
+      index: { expireAfterSeconds: 10 },
+    },
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

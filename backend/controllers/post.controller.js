@@ -43,9 +43,11 @@ export const createPost = async (req, res) => {
   }
 };
 
+//this is for the main feed
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 });
+    const posts = await Post.find({ canceled: false }).sort({ createdAt: -1 });
+
     res.status(200).json(posts);
   } catch (error) {
     res
@@ -54,6 +56,7 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
+//this is for the user profile
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -64,9 +67,8 @@ export const getUserPosts = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const userPosts = await Post.find({ _id: { $in: user.posts } }).sort({
-      createdAt: -1,
-    });
+    const userPosts = await Post.find({ user: userId }) // Find by user reference
+      .sort({ createdAt: -1 });
     res.status(200).json(userPosts);
   } catch (error) {
     res
@@ -126,5 +128,57 @@ export const deletePost = async (req, res) => {
       message: "Failed to delete post",
       error: error.message,
     });
+  }
+};
+
+//this is for tracking status
+
+export const getPostStatusofUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const userPosts = await Post.find({ user: user._id })
+      .sort({
+        createdAt: -1,
+      })
+      .select("pending description");
+
+    res.status(200).json(userPosts);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to fetch user posts", error: error.message });
+  }
+};
+
+//cancelling a post
+
+export const cancelPost = async (req, res) => {
+  try {
+    const { postid } = req.params;
+    const post = await Post.findById(postid);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    if (post.canceled) {
+      return res.status(400).json({ message: "Post already cancelled" });
+    }
+
+    post.canceled = true;
+    post.canceledAt = new Date();
+
+    await post.save();
+
+    res.status(200).json({ message: "Post cancelled successfully" });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to cancel post", error: error.message });
   }
 };
