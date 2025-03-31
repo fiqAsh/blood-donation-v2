@@ -8,6 +8,7 @@ import connectDB from "./utils/db.js";
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
 import bankRoute from "./routes/bank.route.js";
+import searchFilterRoute from "./routes/searchFilter.route.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 app.use("/api/bank", bankRoute);
+app.use("/api/searchFilter", searchFilterRoute);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
