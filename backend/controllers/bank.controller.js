@@ -1,5 +1,6 @@
 import Bank from "../models/bank.model.js";
 import BankRequest from "../models/bankrequest.model.js";
+import { sendAdminNotification } from "./notification.controller.js";
 
 //request related to banks that the user makes
 export const createBankRequest = async (req, res) => {
@@ -19,6 +20,8 @@ export const createBankRequest = async (req, res) => {
       location,
       user: req.user._id,
     });
+
+    await sendAdminNotification(newBankRequest);
 
     res
       .status(200)

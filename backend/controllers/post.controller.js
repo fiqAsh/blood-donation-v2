@@ -2,6 +2,7 @@ import Post from "../models/post.model.js";
 
 import User from "../models/user.model.js";
 import Notification from "../models/notification.model.js";
+import { sendNotifications } from "./notification.controller.js";
 
 export const createPost = async (req, res) => {
   try {
@@ -17,25 +18,9 @@ export const createPost = async (req, res) => {
       user: req.user._id,
     });
 
-    const nearbyUsers = await User.find({
-      location: {
-        $geoWithin: {
-          $centerSphere: [[location.longitude, location.latitude], 3 / 6378.1],
-        },
-      },
-      bloodGroup: bloodGroup,
-      _id: { $ne: req.user._id },
-    });
+    await sendNotifications(newPost);
 
-    const notifications = nearbyUsers.map((user) => ({
-      user: user._id,
-      message: `Urgent: A new blood request has been made near you!`,
-      post: newPost._id,
-    }));
-
-    const savedNotifications = await Notification.insertMany(notifications);
-
-    res.status(201).json({ post: newPost, notifications: savedNotifications });
+    res.status(201).json({ post: newPost });
   } catch (error) {
     res
       .status(500)

@@ -10,6 +10,7 @@ import postRoute from "./routes/post.route.js";
 import bankRoute from "./routes/bank.route.js";
 import searchFilterRoute from "./routes/searchFilter.route.js";
 import messageRoute from "./routes/message.route.js";
+import notificationRoute from "./routes/notification.route.js";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use("/api/post", postRoute);
 app.use("/api/bank", bankRoute);
 app.use("/api/searchFilter", searchFilterRoute);
 app.use("/api/message", messageRoute);
+app.use("/api/notification", notificationRoute);
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
