@@ -1,10 +1,19 @@
 import React from "react";
 
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Home from "./pages/Home";
+
 const App = () => {
   return (
-    <div className="h-screen w-screen bg-gray-100 text-gray-800 justify-center align-middle flex text-3xl font-bold">
-      App
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+    </Router>
   );
 };
 

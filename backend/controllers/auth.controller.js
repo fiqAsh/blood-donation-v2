@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
 
+//ar
 const generateTokens = (user) => {
   const accessToken = jwt.sign(
     { id: user._id },
@@ -21,7 +22,7 @@ const generateTokens = (user) => {
 
   return { accessToken, refreshToken };
 };
-
+//ar
 const setCookies = (res, accessToken, refreshToken) => {
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
@@ -37,7 +38,7 @@ const setCookies = (res, accessToken, refreshToken) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 };
-
+//ar
 export const signup = async (req, res) => {
   try {
     const {
@@ -94,7 +95,7 @@ export const signup = async (req, res) => {
     res.status(500).json({ message: "Signup failed", error: error.message });
   }
 };
-
+//ar
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -125,7 +126,7 @@ export const login = async (req, res) => {
     res.status(500).json({ message: "Login failed", error: error.message });
   }
 };
-
+//ar
 export const logout = async (req, res) => {
   try {
     res.clearCookie("refreshToken", {
@@ -144,7 +145,7 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Logout failed", error: error.message });
   }
 };
-
+//ar
 export const getUserProfile = async (req, res) => {
   try {
     res.status(200).json({ user: req.user });
@@ -154,7 +155,7 @@ export const getUserProfile = async (req, res) => {
       .json({ message: "Failed to get user profile", error: error.message });
   }
 };
-
+//ar
 export const getAllUser = async (req, res) => {
   try {
     const users = await User.find();
@@ -165,7 +166,7 @@ export const getAllUser = async (req, res) => {
       .json({ message: "Failed to get users", error: error.message });
   }
 };
-
+//hjb
 export const updateUser = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -222,7 +223,7 @@ export const updateUser = async (req, res) => {
       .json({ message: "Failed to update user", error: error.message });
   }
 };
-
+//ar
 export const refreshAccessToken = async (req, res) => {
   try {
     const refreshToken = req.cookies.refreshToken;
