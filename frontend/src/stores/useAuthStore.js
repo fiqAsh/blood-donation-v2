@@ -27,6 +27,7 @@ const refreshAccessToken = async () => {
 export const useAuthStore = create((set, get) => ({
   user: null,
   checkingAuth: true,
+  loading: false,
 
   signup: async (formData) => {
     try {
@@ -39,45 +40,83 @@ export const useAuthStore = create((set, get) => ({
   },
 
   login: async (formData) => {
+    set({ loading: true });
     try {
       const res = await axiosInstance.post("/auth/login", formData);
       set({ user: res.data.user });
       return res;
     } catch (error) {
       console.log("login failed", error.response?.data);
+    } finally {
+      set({ loading: false });
     }
   },
 
   logout: async () => {
+    set({ loading: true });
     try {
       await axiosInstance.post("/auth/logout");
       set({ user: null });
     } catch (error) {
       console.log("logout failed", error.response?.data);
+    } finally {
+      set({ loading: false });
     }
   },
 
+  // checkAuth: async () => {
+  //   set({ checkingAuth: true });
+
+  //   try {
+  //     const res = await axiosInstance.get("/auth/getUserProfile");
+  //     set({ user: res.data, checkingAuth: false });
+  //   } catch (error) {
+  //     if (error.response?.status === 401) {
+  //       const newAccessToken = await refreshAccessToken();
+
+  //       if (newAccessToken) {
+  //         try {
+  //           const res = await axiosInstance.get("/auth/getUserProfile");
+  //           set({ user: res.data, checkingAuth: false });
+  //         } catch (error) {
+  //           set({ user: null, checkingAuth: false });
+  //         }
+  //       } else {
+  //         set({ user: null, checkingAuth: false });
+  //       }
+  //     } else {
+  //       set({ user: null, checkingAuth: false });
+  //     }
+  //   }
+  // },
+
   checkAuth: async () => {
+    set({ checkingAuth: true });
+
     try {
-      const res = await axiosInstance.get("/auth/getUserProfile");
+      const res = await axiosInstance.get("/auth/getUserProfile"); // Cookies are sent automatically
       set({ user: res.data, checkingAuth: false });
     } catch (error) {
-      if (error.response.status === 401) {
+      if (error.response?.status === 401) {
+        // Try refreshing the token
         const newAccessToken = await refreshAccessToken();
 
         if (newAccessToken) {
           try {
             const res = await axiosInstance.get("/auth/getUserProfile");
             set({ user: res.data, checkingAuth: false });
+            return;
           } catch (error) {
-            set({ user: null, checkingAuth: false });
+            console.log(
+              "Failed to get profile after refresh",
+              error.response?.data
+            );
           }
-        } else {
-          set({ user: null, checkingAuth: false });
         }
-      } else {
-        set({ user: null, checkingAuth: false });
       }
+
+      set({ user: null, checkingAuth: false });
+      window.location.href = "/"; // Redirect to login if unauthorized
     }
   },
 

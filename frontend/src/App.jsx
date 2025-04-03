@@ -1,18 +1,48 @@
-import React from "react";
-
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import { useAuthStore } from "./stores/useAuthStore";
+import Loading from "./components/Loading";
+
+const AuthWrapper = ({ children }) => {
+  const { checkAuth, checkingAuth } = useAuthStore();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Only check auth if NOT on login or signup page
+    if (location.pathname !== "/" && location.pathname !== "/signup") {
+      checkAuth();
+    } else {
+      useAuthStore.setState({ checkingAuth: false }); // Stop loading state
+    }
+  }, [location.pathname]);
+
+  if (checkingAuth) {
+    return <Loading />; // Show loader while checking auth
+  }
+
+  return children;
+};
 
 const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Routes>
+      <AuthWrapper>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
+      </AuthWrapper>
     </Router>
   );
 };
