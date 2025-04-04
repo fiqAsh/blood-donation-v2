@@ -1,6 +1,7 @@
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 
+//ar
 export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
@@ -36,7 +37,7 @@ export const sendMessage = async (req, res) => {
       .json({ message: "Failed to send message", error: error.message });
   }
 };
-
+//ar
 export const getMessages = async (req, res) => {
   try {
     const { id: userToChatId } = req.params;

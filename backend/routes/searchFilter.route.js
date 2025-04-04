@@ -15,8 +15,8 @@ router.get(
   "/filterBanksByBloodGroup",
   authenticateUser,
   filterBanksByBloodGroup
-);
-router.get("/filterDonors", authenticateUser, filterDonors);
+); //hjb
+router.get("/filterDonors", authenticateUser, filterDonors); //raz
 router.get("/filterPosts", authenticateUser, filterPosts);
 
 export default router;

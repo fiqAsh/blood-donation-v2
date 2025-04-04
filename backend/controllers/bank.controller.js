@@ -47,6 +47,7 @@ export const getAllBankRequests = async (req, res) => {
   }
 };
 
+//hjb
 export const getAllBankData = async (req, res) => {
   try {
     const bankData = await Bank.find();

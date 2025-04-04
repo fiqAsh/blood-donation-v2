@@ -2,6 +2,7 @@ import Bank from "../models/bank.model.js";
 import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
 
+//hjb
 export const filterBanksByBloodGroup = async (req, res) => {
   try {
     const { bloodgroup } = req.query;
@@ -49,6 +50,7 @@ export const filterBanksByBloodGroup = async (req, res) => {
   }
 };
 
+//raz
 export const filterDonors = async (req, res) => {
   try {
     const { bloodgroup, longitude, latitude, maxDistance } = req.query;
@@ -99,6 +101,7 @@ export const filterDonors = async (req, res) => {
   }
 };
 
+//ar
 export const filterPosts = async (req, res) => {
   try {
     const { urgency, time } = req.query;

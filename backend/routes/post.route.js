@@ -18,6 +18,6 @@ router.get("/getAllPosts", authenticateUser, getAllPosts);
 router.get("/getUserPosts/:userId", authenticateUser, getUserPosts);
 router.patch("/updatePost/:postid", authenticateUser, updatePost);
 router.delete("/deletePost/:postid", authenticateUser, deletePost);
-router.get("/getPostStatusofUser", authenticateUser, getPostStatusofUser);
-router.patch("/:postid/cancel", authenticateUser, cancelPost);
+router.get("/getPostStatusofUser", authenticateUser, getPostStatusofUser); //raz
+router.patch("/:postid/cancel", authenticateUser, cancelPost); //hjb
 export default router;

@@ -1,7 +1,7 @@
 import Post from "../models/post.model.js";
 
 import User from "../models/user.model.js";
-import Notification from "../models/notification.model.js";
+
 import { sendNotifications } from "./notification.controller.js";
 
 export const createPost = async (req, res) => {
@@ -117,7 +117,7 @@ export const deletePost = async (req, res) => {
 };
 
 //this is for tracking status
-
+//raz
 export const getPostStatusofUser = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -141,7 +141,7 @@ export const getPostStatusofUser = async (req, res) => {
 };
 
 //cancelling a post
-
+//hjb
 export const cancelPost = async (req, res) => {
   try {
     const { postid } = req.params;

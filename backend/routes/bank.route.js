@@ -14,9 +14,9 @@ import {
 
 const router = express.Router();
 
-router.post("/createbankrequest", authenticateUser, createBankRequest);
-router.get("/getAllBankData", authenticateUser, getAllBankData);
-router.get("/getAllBankRequests", authenticateAdmin, getAllBankRequests);
+router.post("/createbankrequest", authenticateUser, createBankRequest); //raz
+router.get("/getAllBankData", authenticateUser, getAllBankData); //hjb
+router.get("/getAllBankRequests", authenticateAdmin, getAllBankRequests); //ar
 router.patch(
   "/updateBankDetails/:bankid",
   authenticateAdmin,
@@ -26,6 +26,6 @@ router.patch(
   "/processBankrequest/:requestid",
   authenticateAdmin,
   processBankrequest
-);
+); //ar
 
 export default router;

@@ -92,6 +92,8 @@ export const sendNotifications = async (post) => {
     console.error("Error sending notifications:", error);
   }
 };
+
+//raz
 export const sendAdminNotification = async (bankRequest) => {
   try {
     // Find all admin users

@@ -19,6 +19,6 @@ router.post("/logout", logout);
 router.post("/refreshAccessToken", refreshAccessToken);
 router.get("/getUserProfile", authenticateUser, getUserProfile);
 router.get("/getAllUser", authenticateUser, getAllUser);
-router.patch("/updateUser/:id", authenticateUser, updateUser);
+router.patch("/updateUser/:id", authenticateUser, updateUser); //hjb
 
 export default router;
