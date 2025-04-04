@@ -145,7 +145,7 @@ export const logout = async (req, res) => {
     res.status(500).json({ message: "Logout failed", error: error.message });
   }
 };
-//ar
+//hjb
 export const getUserProfile = async (req, res) => {
   try {
     res.status(200).json({ user: req.user });
@@ -167,6 +167,63 @@ export const getAllUser = async (req, res) => {
   }
 };
 //hjb
+// export const updateUser = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const {
+//       name,
+//       email,
+//       password,
+//       bloodGroup,
+//       mobile,
+//       gender,
+//       age,
+//       weight,
+//       height,
+//       latitude,
+//       longitude,
+//     } = req.body;
+
+//     let user = await User.findById(userId);
+
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     let hashedPassword = user.password;
+
+//     if (password) {
+//       const salt = await bcrypt.genSalt(10);
+//       hashedPassword = await bcrypt.hash(password, salt);
+//     }
+
+//     user.name = name || user.name;
+//     user.email = email || user.email;
+//     user.password = hashedPassword;
+//     user.bloodGroup = bloodGroup || user.bloodGroup;
+//     user.mobile = mobile || user.mobile;
+//     user.gender = gender || user.gender;
+//     user.age = age || user.age;
+//     user.weight = weight || user.weight;
+//     user.height = height || user.height;
+//     if (latitude !== undefined && longitude !== undefined) {
+//       user.location = {
+//         type: "Point",
+//         coordinates: [longitude, latitude],
+//       };
+//     }
+//     console.log(user);
+
+//     await user.save();
+
+//     res.json({ message: "Profile updated successfully", user });
+//   } catch (error) {
+//     res
+//       .status(500)
+//       .json({ message: "Failed to update user", error: error.message });
+//   }
+// };
+
 export const updateUser = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -206,13 +263,19 @@ export const updateUser = async (req, res) => {
     user.age = age || user.age;
     user.weight = weight || user.weight;
     user.height = height || user.height;
-    if (latitude !== undefined && longitude !== undefined) {
+
+    // Update location only if both latitude and longitude are provided and valid
+    if (
+      latitude !== undefined &&
+      longitude !== undefined &&
+      latitude !== null &&
+      longitude !== null
+    ) {
       user.location = {
         type: "Point",
         coordinates: [longitude, latitude],
       };
     }
-    console.log(user);
 
     await user.save();
 
@@ -223,6 +286,7 @@ export const updateUser = async (req, res) => {
       .json({ message: "Failed to update user", error: error.message });
   }
 };
+
 //ar
 export const refreshAccessToken = async (req, res) => {
   try {

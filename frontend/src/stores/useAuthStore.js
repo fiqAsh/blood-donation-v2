@@ -122,7 +122,7 @@ export const useAuthStore = create((set, get) => ({
 
   updateUser: async (formData) => {
     try {
-      const res = await axiosInstance.patch("/auth/updateUser/:id", formData);
+      const res = await axiosInstance.patch("/auth/updateUser", formData);
       set({ user: { user: res.data.user } });
 
       return res;
