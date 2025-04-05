@@ -10,6 +10,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    quantity: {
+      type: Number,
+      required: true,
+    },
     location: {
       latitude: { type: Number, required: true },
       longitude: { type: Number, required: true },

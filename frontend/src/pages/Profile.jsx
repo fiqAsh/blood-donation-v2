@@ -6,7 +6,7 @@ import UserPosts from "../components/UserPosts";
 import UserNotifications from "../components/UserNotifications";
 
 const Profile = () => {
-  const { checkAuth, user, checkingAuth } = useAuthStore();
+  const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState("info");
   return (
     <div className="min-h-screen bg-gray-100">

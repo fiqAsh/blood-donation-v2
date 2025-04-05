@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useAuthStore } from "../stores/useAuthStore";
 import MapComponent from "./MapComponent";
+import Loading from "./Loading";
 
 const UserInfo = () => {
-  const { user, updateUser } = useAuthStore();
+  const { user, updateUser, loading } = useAuthStore();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -45,6 +46,14 @@ const UserInfo = () => {
       });
     }
   }, [user]);
+
+  if (loading) {
+    return (
+      <>
+        <Loading />
+      </>
+    );
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -6,15 +6,19 @@ import { sendNotifications } from "./notification.controller.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { description, bloodGroup, location } = req.body;
+    const { description, bloodGroup, location, quantity } = req.body;
     if (!location || !location.latitude || !location.longitude) {
       return res.status(400).json({ message: "Location is required" });
+    }
+    if (quantity < 0) {
+      return res.status(400).json({ message: "Quantity cannot be negative" });
     }
 
     const newPost = await Post.create({
       description,
       bloodGroup,
       location,
+      quantity,
       user: req.user._id,
     });
 
@@ -65,7 +69,7 @@ export const getUserPosts = async (req, res) => {
 export const updatePost = async (req, res) => {
   try {
     const { postid } = req.params;
-    const { description, pending } = req.body;
+    const { description, pending, quantity } = req.body;
 
     const post = await Post.findById(postid);
 
@@ -79,6 +83,9 @@ export const updatePost = async (req, res) => {
 
     if (pending !== undefined) {
       post.pending = pending;
+    }
+    if (quantity !== undefined) {
+      post.quantity = quantity;
     }
 
     await post.save();
