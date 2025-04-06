@@ -22,7 +22,7 @@ const postSchema = new mongoose.Schema(
 
     urgency: {
       type: String,
-      enum: ["high", "medium", "low"],
+      enum: ["High", "Medium", "Low"],
       default: "low",
     },
 

@@ -6,7 +6,7 @@ import { sendNotifications } from "./notification.controller.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { description, bloodGroup, location, quantity } = req.body;
+    const { description, bloodGroup, location, quantity, urgency } = req.body;
     if (!location || !location.latitude || !location.longitude) {
       return res.status(400).json({ message: "Location is required" });
     }
@@ -20,6 +20,7 @@ export const createPost = async (req, res) => {
       location,
       quantity,
       user: req.user._id,
+      urgency,
     });
 
     await sendNotifications(newPost);

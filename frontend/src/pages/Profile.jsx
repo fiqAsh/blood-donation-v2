@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/useAuthStore";
 import UserInfo from "../components/UserInfo";
 import UserPosts from "../components/UserPosts";
 import UserNotifications from "../components/UserNotifications";
+import PostStatus from "../components/PostStatus";
 
 const Profile = () => {
   const { user } = useAuthStore();
@@ -54,6 +55,16 @@ const Profile = () => {
           >
             Notifications
           </button>
+          <button
+            onClick={() => setActiveTab("reqStatus")}
+            className={`py-2 px-4 font-semibold ${
+              activeTab === "reqStatus"
+                ? "text-blue-600 border-b-2 border-blue-600"
+                : "text-gray-600 hover:text-gray-800"
+            }`}
+          >
+            Request Status
+          </button>
         </div>
 
         {/* tabcontent */}
@@ -64,6 +75,7 @@ const Profile = () => {
           {activeTab === "notifications" && (
             <UserNotifications userId={user.user._id} />
           )}
+          {activeTab === "reqStatus" && <PostStatus userId={user.user._id} />}
         </div>
       </div>
     </div>
