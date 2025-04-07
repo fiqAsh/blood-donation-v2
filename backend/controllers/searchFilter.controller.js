@@ -109,7 +109,7 @@ export const filterPosts = async (req, res) => {
     let filter = {};
 
     if (urgency) {
-      if (["high", "medium", "low"].includes(urgency)) {
+      if (["High", "Medium", "Low"].includes(urgency)) {
         filter.urgency = urgency;
       } else {
         return res.status(400).json({ message: "Invalid urgency" });

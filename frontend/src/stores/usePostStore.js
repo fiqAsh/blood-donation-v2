@@ -114,4 +114,17 @@ export const usePostStore = create((set, get) => ({
       set({ loadingPosts: false });
     }
   },
+
+  filterPost: async (filters) => {
+    set({ loadingPosts: true });
+    try {
+      const query = new URLSearchParams(filters).toString();
+      const res = await axiosInstance.get(`/searchFilter/filterPosts?${query}`);
+      set({ posts: res.data.posts });
+    } catch (error) {
+      console.log("Error filtering posts:", error.response?.data);
+    } finally {
+      set({ loadingPosts: false });
+    }
+  },
 }));

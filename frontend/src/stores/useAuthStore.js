@@ -130,4 +130,19 @@ export const useAuthStore = create((set, get) => ({
       console.log("update user failed", error.response?.data);
     }
   },
+  searchForDonor: async (filters) => {
+    set({ loading: true });
+    try {
+      const query = new URLSearchParams(filters).toString();
+      const res = await axiosInstance.get(
+        `/searchfilter/filterDonors?${query}`
+      );
+      set({ user: res.data.user });
+      return res.data;
+    } catch (error) {
+      console.log("Error searching for donors:", error.response?.data);
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

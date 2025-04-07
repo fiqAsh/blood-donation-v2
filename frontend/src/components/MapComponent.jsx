@@ -34,7 +34,9 @@ const MapComponent = ({ onLocationSelect }) => {
 
   const handleSelectLocation = (lat, lng) => {
     setSelectedPosition([lat, lng]);
-    onLocationSelect(lat, lng);
+    if (onLocationSelect) {
+      onLocationSelect(lat, lng); // Only call if it's defined
+    }
   };
 
   return (
