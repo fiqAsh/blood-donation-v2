@@ -19,6 +19,7 @@ export const createBankRequest = async (req, res) => {
       bloodgroup,
       quantity,
       location,
+
       user: req.user._id,
     });
 
@@ -38,8 +39,9 @@ export const createBankRequest = async (req, res) => {
 //ar
 export const getAllBankRequests = async (req, res) => {
   try {
-    const requests = await BankRequest.find();
+    const requests = await BankRequest.find().populate("bank", "name");
     res.status(200).json(requests);
+    console.log(requests);
   } catch (error) {
     res
       .status(500)
@@ -63,13 +65,12 @@ export const updateBankDetails = async (req, res) => {
   try {
     const { bankid } = req.params;
 
-    const { name, bloodInventory, location } = req.body;
+    const { name, bloodInventory } = req.body;
     const updatedBank = await Bank.findByIdAndUpdate(
       bankid,
       {
         name,
         bloodInventory,
-        location,
       },
       {
         new: true,

@@ -21,6 +21,8 @@ const Login = () => {
 
       setMessage(response.data.message);
       setFormData({ email: "", password: "" });
+      console.log("Role:", response?.data?.user?.role);
+
       navigate("/home");
     } catch (error) {
       console.log("login failed", error.response?.data);

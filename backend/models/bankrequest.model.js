@@ -4,6 +4,8 @@ const bankRequestSchema = new mongoose.Schema(
   {
     bank: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Bank",
+      required: true,
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

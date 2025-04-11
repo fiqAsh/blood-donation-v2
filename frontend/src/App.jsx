@@ -11,6 +11,8 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { useAuthStore } from "./stores/useAuthStore";
 import Loading from "./components/Loading";
+import AdminPage from "./pages/AdminPage";
+//import AdminRoute from "./components/AdminRoute";
 
 const AuthWrapper = ({ children }) => {
   const { checkAuth, checkingAuth } = useAuthStore();
@@ -41,6 +43,7 @@ const App = () => {
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/adminpage" element={<AdminPage />} />
         </Routes>
       </AuthWrapper>
     </Router>

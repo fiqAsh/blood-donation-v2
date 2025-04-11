@@ -44,6 +44,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/login", formData);
       set({ user: res.data.user });
+      console.log(res.data.user.role);
       return res;
     } catch (error) {
       console.log("login failed", error.response?.data);
@@ -64,41 +65,14 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  // checkAuth: async () => {
-  //   set({ checkingAuth: true });
-
-  //   try {
-  //     const res = await axiosInstance.get("/auth/getUserProfile");
-  //     set({ user: res.data, checkingAuth: false });
-  //   } catch (error) {
-  //     if (error.response?.status === 401) {
-  //       const newAccessToken = await refreshAccessToken();
-
-  //       if (newAccessToken) {
-  //         try {
-  //           const res = await axiosInstance.get("/auth/getUserProfile");
-  //           set({ user: res.data, checkingAuth: false });
-  //         } catch (error) {
-  //           set({ user: null, checkingAuth: false });
-  //         }
-  //       } else {
-  //         set({ user: null, checkingAuth: false });
-  //       }
-  //     } else {
-  //       set({ user: null, checkingAuth: false });
-  //     }
-  //   }
-  // },
-
   checkAuth: async () => {
     set({ checkingAuth: true });
 
     try {
-      const res = await axiosInstance.get("/auth/getUserProfile"); // Cookies are sent automatically
+      const res = await axiosInstance.get("/auth/getUserProfile");
       set({ user: res.data, checkingAuth: false });
     } catch (error) {
       if (error.response?.status === 401) {
-        // Try refreshing the token
         const newAccessToken = await refreshAccessToken();
 
         if (newAccessToken) {
