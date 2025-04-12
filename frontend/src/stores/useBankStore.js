@@ -92,8 +92,8 @@ export const useBankStore = create((set, get) => ({
           params: { bloodgroup },
         }
       );
-      set({ bankData: res.data.banks }); // update with filtered banks
-      return res.data; // optionally return it if needed in UI
+      set({ bankData: res.data.banks });
+      return res.data;
     } catch (error) {
       console.log("error filtering banks", error.response?.data);
     } finally {
