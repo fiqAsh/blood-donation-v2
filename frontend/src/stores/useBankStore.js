@@ -1,5 +1,4 @@
 import { create } from "zustand";
-
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -9,14 +8,33 @@ const axiosInstance = axios.create({
 
 export const useBankStore = create((set, get) => ({
   bankData: [],
+  filteredBankData: [],
   bankRequests: [],
   loading: false,
+
+  filterBanks: async (bloodgroup) => {
+    set({ loading: true });
+    try {
+      const res = await axiosInstance.get(
+        "/searchFilter/filterBanksByBloodGroup",
+        { params: { bloodgroup } }
+      );
+      set({ filteredBankData: res.data.banks }); // only update filtered data
+      return res.data;
+    } catch (error) {
+      console.log("error filtering banks", error.response?.data);
+    } finally {
+      set({ loading: false });
+    }
+  },
 
   fetchBankData: async () => {
     set({ loading: true });
     try {
       const res = await axiosInstance.get("/bank/getAllBankData");
-      set({ bankData: res.data });
+      set({
+        bankData: res.data,
+      });
     } catch (error) {
       console.log("error fetching bank data", error.response?.data);
     } finally {
@@ -55,7 +73,6 @@ export const useBankStore = create((set, get) => ({
         `/bank/processBankRequest/${requestid}`,
         { action }
       );
-
       const updatedRequests = get().bankRequests.filter(
         (req) => req._id !== requestid
       );
@@ -78,24 +95,6 @@ export const useBankStore = create((set, get) => ({
       return res;
     } catch (error) {
       console.log("error updating bank details", error.response?.data);
-    } finally {
-      set({ loading: false });
-    }
-  },
-
-  filterBanks: async (bloodgroup) => {
-    set({ loading: true });
-    try {
-      const res = await axiosInstance.get(
-        "/searchFilter/filterBanksByBloodGroup",
-        {
-          params: { bloodgroup },
-        }
-      );
-      set({ bankData: res.data.banks });
-      return res.data;
-    } catch (error) {
-      console.log("error filtering banks", error.response?.data);
     } finally {
       set({ loading: false });
     }

@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import Navbar from "../components/Navbar";
 import { useBankStore } from "../stores/useBankStore";
 import BankFilter from "../components/BankFilter";
+import BankMapCard from "../components/BankCard";
 
 const AdminPage = () => {
   const { user, checkingAuth } = useAuthStore();
@@ -20,13 +21,13 @@ const AdminPage = () => {
   }, [checkingAuth, user]);
 
   if (checkingAuth || !user) return <Loading />;
-  console.log(bankData);
 
   return (
     <div>
       <Navbar />
       <h1>Admin DashBoard</h1>
       <BankFilter />
+      <BankMapCard />
     </div>
   );
 };

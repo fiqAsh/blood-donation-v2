@@ -38,6 +38,7 @@ export const filterBanksByBloodGroup = async (req, res) => {
       message: "Banks found",
       bloodgroup: bloodgroup, // Include searched blood group for clarity
       banks: banks.map((bank) => ({
+        _id: bank._id,
         name: bank.name,
         location: bank.location,
         quantity: bank.bloodInventory[key] || 0, // Ensure 0 if undefined
