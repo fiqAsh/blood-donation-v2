@@ -29,7 +29,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 app.use("/api/bank", bankRoute);
 app.use("/api/searchFilter", searchFilterRoute);
-app.use("/api/message", messageRoute);
+app.use("/api/messages", messageRoute);
 app.use("/api/notification", notificationRoute);
 
 app.listen(3000, () => {

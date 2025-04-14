@@ -36,7 +36,9 @@ export const createPost = async (req, res) => {
 //this is for the main feed
 export const getAllPosts = async (req, res) => {
   try {
-    const posts = await Post.find({ canceled: false }).sort({ createdAt: -1 });
+    const posts = await Post.find({ canceled: false })
+      .sort({ createdAt: -1 })
+      .populate("user", "name");
 
     res.status(200).json(posts);
   } catch (error) {
