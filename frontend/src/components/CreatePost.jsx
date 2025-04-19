@@ -99,7 +99,6 @@ const CreatePost = () => {
   };
 
   const updateField = (field, value) => {
-    console.log("Updating:", field, value); // Add this
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -148,8 +147,8 @@ const CreatePost = () => {
             type="number"
             className="w-full p-2 border rounded"
             placeholder="Number of bags required (1-10)"
-            min="1"
-            max="10"
+            min={1}
+            max={10}
             value={formData.quantity}
             onChange={(e) => updateField("quantity", e.target.value)}
           />

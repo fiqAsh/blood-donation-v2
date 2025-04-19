@@ -13,9 +13,9 @@ const customIcon = new L.Icon({
   popupAnchor: [1, -34],
 });
 
-const BankMapCard = () => {
+// BankMapCard.jsx
+const BankMapCard = ({ onBankSelect }) => {
   const { bankData, fetchBankData } = useBankStore();
-  const [selectedBankId, setSelectedBankId] = useState(null);
 
   useEffect(() => {
     fetchBankData();
@@ -35,10 +35,8 @@ const BankMapCard = () => {
     ));
   };
 
-  const displayBanks = bankData;
-
   return (
-    <div className="p-4 bg-base-200 rounded-lg shadow">
+    <div className="p-4 bg-base-200 rounded-lg shadow mb-6">
       <h2 className="text-xl font-bold mb-4">Blood Bank Locations</h2>
       <MapContainer
         center={dhakaPosition}
@@ -50,13 +48,13 @@ const BankMapCard = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        {displayBanks.map((bank) => (
+        {bankData.map((bank) => (
           <Marker
             key={bank._id}
             position={[bank.location.latitude, bank.location.longitude]}
             icon={customIcon}
             eventHandlers={{
-              click: () => setSelectedBankId(bank._id),
+              click: () => onBankSelect(bank),
             }}
           >
             <Popup>

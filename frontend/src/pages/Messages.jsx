@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../stores/useAuthStore";
 import Loading from "../components/Loading";
+import Navbar from "../components/Navbar"; // 👈 import the Navbar
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -58,70 +59,76 @@ const Messages = () => {
   }
 
   return (
-    <div className="flex h-screen ">
-      <div className="w-1/4 bg-base-200 p-4 overflow-y-auto">
-        <h2 className="text-lg font-bold mb-4">Users</h2>
-        {users.map((u) => (
-          <div
-            key={u._id}
-            className={`p-2 cursor-pointer rounded ${
-              selectedUser?._id === u._id
-                ? "bg-primary text-white"
-                : "hover:bg-base-300"
-            }`}
-            onClick={() => setSelectedUser(u)}
-          >
-            {u.name || u.email}
-          </div>
-        ))}
-      </div>
+    <div className="flex flex-col h-screen">
+      {/* Navbar at the top */}
+      <Navbar />
 
-      <div className="w-3/4 flex flex-col p-4">
-        {selectedUser ? (
-          <>
-            <div className="flex-1 overflow-y-auto space-y-2 mb-4">
-              {messages.map((msg) => {
-                const senderId = msg.sender?._id || msg.sender;
-                const isOwnMessage = senderId === user.user._id;
+      {/* Main chat layout below navbar */}
+      <div className="flex flex-1 overflow-hidden">
+        <div className="w-1/4 bg-base-200 p-4 overflow-y-auto">
+          <h2 className="text-lg font-bold mb-4">Users</h2>
+          {users.map((u) => (
+            <div
+              key={u._id}
+              className={`p-2 cursor-pointer rounded ${
+                selectedUser?._id === u._id
+                  ? "bg-primary text-white"
+                  : "hover:bg-base-300"
+              }`}
+              onClick={() => setSelectedUser(u)}
+            >
+              {u.name || u.email}
+            </div>
+          ))}
+        </div>
 
-                return (
-                  <div
-                    key={msg._id}
-                    className={`chat ${
-                      isOwnMessage ? "chat-end" : "chat-start"
-                    }`}
-                  >
+        <div className="w-3/4 flex flex-col p-4">
+          {selectedUser ? (
+            <>
+              <div className="flex-1 overflow-y-auto space-y-2 mb-4">
+                {messages.map((msg) => {
+                  const senderId = msg.sender?._id || msg.sender;
+                  const isOwnMessage = senderId === user.user._id;
+
+                  return (
                     <div
-                      className={`chat-bubble ${
-                        isOwnMessage
-                          ? "bg-primary text-white"
-                          : "bg-base-300 text-black"
+                      key={msg._id}
+                      className={`chat ${
+                        isOwnMessage ? "chat-end" : "chat-start"
                       }`}
                     >
-                      {msg.text}
+                      <div
+                        className={`chat-bubble ${
+                          isOwnMessage
+                            ? "bg-primary text-white"
+                            : "bg-base-300 text-black"
+                        }`}
+                      >
+                        {msg.text}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Type a message"
-                className="input input-bordered flex-1"
-              />
-              <button onClick={handleSend} className="btn btn-primary">
-                Send
-              </button>
-            </div>
-          </>
-        ) : (
-          <p className="text-center text-gray-500">
-            Select a user to start chatting
-          </p>
-        )}
+                  );
+                })}
+              </div>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  placeholder="Type a message"
+                  className="input input-bordered flex-1"
+                />
+                <button onClick={handleSend} className="btn btn-primary">
+                  Send
+                </button>
+              </div>
+            </>
+          ) : (
+            <p className="text-center text-gray-500">
+              Select a user to start chatting
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
