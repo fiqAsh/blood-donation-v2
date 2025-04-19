@@ -12,10 +12,13 @@ import Profile from "./pages/Profile";
 import { useAuthStore } from "./stores/useAuthStore";
 import Loading from "./components/Loading";
 import AdminPage from "./pages/AdminPage";
-//import AdminRoute from "./components/AdminRoute";
+
+import Messages from "./pages/Messages";
 
 const AuthWrapper = ({ children }) => {
   const { checkAuth, checkingAuth } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -44,6 +47,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/adminpage" element={<AdminPage />} />
+          <Route path="/messagepage" element={<Messages />} />
         </Routes>
       </AuthWrapper>
     </Router>

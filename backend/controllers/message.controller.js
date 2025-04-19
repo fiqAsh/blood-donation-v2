@@ -1,59 +1,42 @@
-import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import User from "../models/user.model.js";
 
-//ar
-export const sendMessage = async (req, res) => {
+export const getUsers = async (req, res) => {
   try {
-    const { message } = req.body;
-    const { id: recieverId } = req.params;
-
-    const senderId = req.user._id;
-
-    let conversation = await Conversation.findOne({
-      participants: { $all: [senderId, recieverId] },
-    });
-
-    if (!conversation) {
-      conversation = await Conversation.create({
-        participants: [senderId, recieverId],
-      });
-    }
-    const newMessage = new Message({
-      senderId,
-      recieverId,
-      message,
-    });
-
-    if (newMessage) {
-      conversation.messages.push(newMessage._id);
-    }
-
-    await Promise.all([conversation.save(), newMessage.save()]);
-
-    res.status(200).json(newMessage);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to send message", error: error.message });
+    const users = await User.find({ _id: { $ne: req.user.id } }).select(
+      "name email"
+    );
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
-//ar
+
 export const getMessages = async (req, res) => {
+  const { userId } = req.params;
   try {
-    const { id: userToChatId } = req.params;
+    const messages = await Message.find({
+      $or: [
+        { sender: req.user.id, receiver: userId },
+        { sender: userId, receiver: req.user.id },
+      ],
+    }).sort({ createdAt: 1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 
-    const senderId = req.user._id;
-
-    const conversation = await Conversation.findOne({
-      participants: { $all: [senderId, userToChatId] },
-    }).populate("messages");
-
-    const messages = conversation.messages;
-
-    res.status(200).json(messages);
-  } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Failed to get messages", error: error.message });
+export const sendMessage = async (req, res) => {
+  const { receiverId, text } = req.body;
+  try {
+    const newMessage = await Message.create({
+      sender: req.user.id,
+      receiver: receiverId,
+      text,
+    });
+    res.status(201).json(newMessage);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
