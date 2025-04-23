@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../stores/useAuthStore";
 import Loading from "../components/Loading";
-import Navbar from "../components/Navbar"; // 👈 import the Navbar
+import Navbar from "../components/Navbar";
+import { useLocation } from "react-router-dom"; // 👈 import useLocation
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -16,6 +17,8 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
 
+  const location = useLocation(); // 👈 get location state
+
   useEffect(() => {
     if (!user) return;
 
@@ -26,6 +29,14 @@ const Messages = () => {
         console.error("Error fetching users:", err.response?.data)
       );
   }, [user]);
+
+  // 👇 Auto-select user from ShowPost
+  useEffect(() => {
+    if (location.state?.selectedUser) {
+      setSelectedUser(location.state.selectedUser);
+      window.history.replaceState({}, document.title); // clears state so it doesn't persist on next visit
+    }
+  }, [location.state]);
 
   useEffect(() => {
     if (!selectedUser) return;
@@ -60,10 +71,8 @@ const Messages = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* Navbar at the top */}
       <Navbar />
 
-      {/* Main chat layout below navbar */}
       <div className="flex flex-1 overflow-hidden">
         <div className="w-1/4 bg-base-200 p-4 overflow-y-auto">
           <h2 className="text-lg font-bold mb-4">Users</h2>

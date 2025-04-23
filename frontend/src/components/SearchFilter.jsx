@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { usePostStore } from "../stores/usePostStore";
 import { useAuthStore } from "../stores/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import MapComponent from "./MapComponent";
 
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  withCredentials: true,
+});
+
 const SearchFilter = () => {
   const { filterPost } = usePostStore();
-  const { searchForDonor } = useAuthStore();
+  const { searchForDonor, user } = useAuthStore();
 
   const [urgency, setUrgency] = useState("");
   const [time, setTime] = useState("");
@@ -16,6 +23,7 @@ const SearchFilter = () => {
 
   const [donorResults, setDonorResults] = useState([]);
   const [donorSearchError, setDonorSearchError] = useState("");
+  const navigate = useNavigate();
 
   const handlePostFilter = () => {
     const filters = {};
@@ -53,6 +61,24 @@ const SearchFilter = () => {
     } catch (error) {
       console.error("Error searching donors:", error);
       setDonorSearchError("Something went wrong while searching.");
+    }
+  };
+
+  const handleMessage = async (receiver, text) => {
+    try {
+      await axiosInstance.post("/messages", {
+        receiverId: receiver._id,
+        text,
+      });
+
+      navigate("/messagepage", {
+        state: {
+          selectedUser: receiver,
+        },
+      });
+    } catch (error) {
+      console.error("Failed to send message:", error.response?.data);
+      alert("Failed to send message. Try again.");
     }
   };
 
@@ -143,13 +169,28 @@ const SearchFilter = () => {
             {donorResults.map((donor, idx) => (
               <div
                 key={idx}
-                className="border p-3 rounded bg-gray-50 flex justify-between items-center"
+                className="border p-3 rounded bg-gray-50 space-y-1"
               >
-                <div>
-                  <p className="font-medium">{donor.name}</p>
-                  <p className="text-sm text-gray-600">{donor.bloodGroup}</p>
-                  <p className="text-sm text-gray-600">{donor.mobile}</p>
-                </div>
+                <p className="font-medium">{donor.name}</p>
+                <p className="text-sm text-gray-600">
+                  Blood Group: {donor.bloodGroup}
+                </p>
+                <p className="text-sm text-gray-600">Mobile: {donor.mobile}</p>
+
+                {/* Only show message button if the logged-in user is not the donor */}
+                {donor._id !== user?.user._id && (
+                  <button
+                    onClick={() =>
+                      handleMessage(
+                        donor,
+                        `Hi ${donor.name}, I found your profile through the donor search and would like to get in touch.`
+                      )
+                    }
+                    className="mt-2 btn btn-primary w-full"
+                  >
+                    Message {donor.name}
+                  </button>
+                )}
               </div>
             ))}
           </div>

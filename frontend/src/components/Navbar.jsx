@@ -18,7 +18,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-end items-center space-x-4 p-4 bg-base-200 shadow-md sticky top-0 z-50">
+    <div className="w-full flex justify-end items-center space-x-4 p-4 bg-base-200 shadow-md ">
       <button
         onClick={() => navigate("/home")}
         className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg shadow hover:bg-blue-600"

@@ -1,26 +1,53 @@
 import React, { useEffect } from "react";
 import { usePostStore } from "../stores/usePostStore";
+import { useAuthStore } from "../stores/useAuthStore";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import { useNavigate } from "react-router-dom";
 import L from "leaflet";
+import axios from "axios";
 import Loading from "./Loading";
+
+const axiosInstance = axios.create({
+  baseURL: "http://localhost:3000/api",
+  withCredentials: true,
+});
 
 const ShowPost = () => {
   const { posts, fetchPosts, loadingPosts } = usePostStore();
+  const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPosts();
   }, []);
 
-  // Create a simple marker icon (Leaflet requires explicit icons)
   const markerIcon = new L.Icon({
     iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
     iconSize: [25, 41],
     iconAnchor: [12, 41],
   });
 
-  if (loadingPosts) {
-    return <Loading />;
-  }
+  const handleMessage = async (receiver, text) => {
+    try {
+      await axiosInstance.post("/messages", {
+        receiverId: receiver._id,
+        text,
+      });
+
+      console.log("Navigating to messages with:", receiver); // Debug log
+
+      navigate("/messagepage", {
+        state: {
+          selectedUser: receiver, // Pass full user object
+        },
+      });
+    } catch (error) {
+      console.error("Failed to send message:", error.response?.data);
+      alert("Failed to send message. Try again.");
+    }
+  };
+
+  if (loadingPosts) return <Loading />;
 
   if (!posts || posts.length === 0) {
     return (
@@ -62,6 +89,7 @@ const ShowPost = () => {
                 {post.urgency}
               </span>
             </p>
+
             {post.location && (
               <div className="h-40 mt-2 rounded overflow-hidden">
                 <MapContainer
@@ -80,6 +108,20 @@ const ShowPost = () => {
                   />
                 </MapContainer>
               </div>
+            )}
+
+            {user?.user._id !== post.user._id && (
+              <button
+                className="btn btn-primary w-full"
+                onClick={() =>
+                  handleMessage(
+                    post.user,
+                    `Regarding your blood request: ${post.description}`
+                  )
+                }
+              >
+                Message {post.user.name}
+              </button>
             )}
           </div>
         </div>
