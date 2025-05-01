@@ -16,6 +16,7 @@ export const usePostStore = create((set, get) => ({
     set({ loadingPosts: true });
     try {
       const res = await axiosInstance.get("/post/getAllPosts");
+
       set({ posts: res.data });
     } catch (error) {
       console.log("error fetching posts", error.response?.data);
@@ -120,6 +121,7 @@ export const usePostStore = create((set, get) => ({
     try {
       const query = new URLSearchParams(filters).toString();
       const res = await axiosInstance.get(`/searchFilter/filterPosts?${query}`);
+
       set({ posts: res.data.posts });
     } catch (error) {
       console.log("Error filtering posts:", error.response?.data);

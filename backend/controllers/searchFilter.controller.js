@@ -135,7 +135,9 @@ export const filterPosts = async (req, res) => {
       filter.createdAt = { $gte: startDate };
     }
 
-    const posts = await Post.find(filter).sort({ urgency: 1, createdAt: -1 });
+    const posts = await Post.find(filter)
+      .sort({ urgency: 1, createdAt: -1 })
+      .populate("user", "name");
     if (posts.length === 0) {
       return res
         .status(404)

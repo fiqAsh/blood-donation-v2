@@ -71,6 +71,8 @@ const SearchFilter = () => {
         text,
       });
 
+      console.log("Navigating to messages with:", receiver);
+
       navigate("/messagepage", {
         state: {
           selectedUser: receiver,

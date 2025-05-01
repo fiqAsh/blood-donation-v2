@@ -34,11 +34,11 @@ const ShowPost = () => {
         text,
       });
 
-      console.log("Navigating to messages with:", receiver); // Debug log
+      console.log("Navigating to messages with:", receiver);
 
       navigate("/messagepage", {
         state: {
-          selectedUser: receiver, // Pass full user object
+          selectedUser: receiver,
         },
       });
     } catch (error) {
