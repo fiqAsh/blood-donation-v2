@@ -255,18 +255,20 @@ const Messages = () => {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
+      <hr />
 
       <div className="flex flex-1 overflow-hidden">
         {/* User List */}
         <div className="w-1/4 bg-base-200 p-4 overflow-y-auto">
           <h2 className="text-lg font-bold mb-4">Users</h2>
+          <hr className="mb-1" />
           {users.map((u) => (
             <div
               key={u._id}
               className={`p-2 cursor-pointer rounded ${
                 selectedUser?._id === u._id
-                  ? "bg-primary text-white"
-                  : "hover:bg-base-300"
+                  ? "bg-black text-white"
+                  : "hover:bg-base-100"
               }`}
               onClick={() => setSelectedUser(u)}
             >
@@ -319,9 +321,7 @@ const Messages = () => {
               </div>
             </>
           ) : (
-            <p className="text-center text-gray-500">
-              Select a user to start chatting
-            </p>
+            <p className="text-center text">Select a user to start chatting</p>
           )}
         </div>
       </div>

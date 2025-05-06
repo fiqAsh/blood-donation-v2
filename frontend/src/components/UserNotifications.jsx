@@ -6,7 +6,7 @@ const UserNotification = () => {
   const {
     notifications,
     loadingNotifications,
-    getNotifications,
+
     markAllNotificationsAsRead,
     deleteSingleNotification,
     deleteAllNotification,
@@ -59,7 +59,7 @@ const UserNotification = () => {
             key={notification._id}
             className={`flex justify-between items-center border p-4 rounded ${
               notification.isRead
-                ? "bg-gray-200 text-gray-700"
+                ? "bg-gray-300 text-gray-700"
                 : "bg-white text-black"
             }`}
           >

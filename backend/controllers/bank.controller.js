@@ -1,6 +1,7 @@
 import Bank from "../models/bank.model.js";
 import BankRequest from "../models/bankrequest.model.js";
 import { sendAdminNotification } from "./notification.controller.js";
+import { notifyUserBankRequestStatus } from "./notification.controller.js";
 
 //request related to banks that the user makes
 //raz
@@ -137,6 +138,7 @@ export const processBankrequest = async (req, res) => {
       bank.bloodInventory[key] -= request.quantity;
 
       await bank.save();
+      await notifyUserBankRequestStatus(request, "accepted");
 
       await BankRequest.findByIdAndDelete(requestid);
 
@@ -144,6 +146,7 @@ export const processBankrequest = async (req, res) => {
         message: "Request processed successfully and inventory updated",
       });
     } else if (action === "rejected") {
+      await notifyUserBankRequestStatus(request, "rejected");
       await BankRequest.findByIdAndDelete(requestid);
       return res.status(200).json({ message: "Request rejected successfully" });
     }
@@ -151,5 +154,22 @@ export const processBankrequest = async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to process request", error: error.message });
+  }
+};
+
+export const getUserBankRequest = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const userRequests = await BankRequest.find({ user: userId })
+      .populate("bank", "name") // Populate bank name
+      .sort({ createdAt: -1 }); // Optional: show newest first
+
+    res.status(200).json(userRequests);
+  } catch (error) {
+    res.status(500).json({
+      message: "Failed to fetch user bank requests",
+      error: error.message,
+    });
   }
 };

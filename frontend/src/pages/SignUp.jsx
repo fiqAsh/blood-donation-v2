@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MapComponent from "../components/MapComponent";
 import { useNavigate } from "react-router-dom";
-
 import { useAuthStore } from "../stores/useAuthStore";
 
 const SignUp = () => {
@@ -70,18 +69,19 @@ const SignUp = () => {
       setMessage(error.response?.data?.message);
     }
   };
+
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-xl">
+    <div className="flex justify-center items-center min-h-screen p-4 ">
+      <div className="bg-base-300 p-6 rounded-lg shadow-lg w-full max-w-xl">
         {message && <p className="text-center text-red-500 mb-4">{message}</p>}
 
-        <form className="grid grid-cols-2 gap-4">
+        <form className=" grid grid-cols-2 gap-4 bg-base-300">
           {/* Left Column */}
           <div className="flex flex-col gap-4">
             <input
               type="text"
               placeholder="Name"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="input-primary bg-base-200 rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="name"
               value={formData.name}
@@ -90,7 +90,7 @@ const SignUp = () => {
             <input
               type="email"
               placeholder="Email"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="email"
               value={formData.email}
@@ -99,7 +99,7 @@ const SignUp = () => {
             <input
               type="password"
               placeholder="Password"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="password"
               value={formData.password}
@@ -107,7 +107,7 @@ const SignUp = () => {
             />
             <select
               name="bloodGroup"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               value={formData.bloodGroup}
               onChange={handleChange}
@@ -123,22 +123,18 @@ const SignUp = () => {
               <option value="O-">O-</option>
             </select>
 
-            <div className="flex items-center border-2 rounded-lg p-2 shadow-sm">
-              <span className="text-gray-500 pr-2">+880</span>
+            <div className="flex items-center rounded-lg p-2 shadow-sm bg-base-200">
+              <span className="input-primary pr-2">+880</span>
               <input
                 type="text"
                 placeholder="1XXXXXXXXX"
-                className="text-black flex-1 outline-none"
+                className="bg-base-200 input-primary flex-1 outline-none focus:outline-none"
                 required
                 name="mobile"
                 value={formData.mobile}
                 onChange={(e) => {
-                  // Remove non-numeric characters
                   let value = e.target.value.replace(/\D/g, "");
-
-                  // Ensure it starts with "1" and is max 9 digits (since +880 takes 3 digits)
                   if (value.length > 10) value = value.slice(0, 10);
-
                   setFormData({ ...formData, mobile: value });
                 }}
               />
@@ -147,10 +143,9 @@ const SignUp = () => {
 
           {/* Right Column */}
           <div className="flex flex-col gap-4">
-            {/* Gender Selection */}
             <select
               name="gender"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 select-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               value={formData.gender}
               onChange={handleChange}
@@ -160,25 +155,22 @@ const SignUp = () => {
               <option value="female">Female</option>
             </select>
 
-            {/* Age Field - Enabled after Gender is selected */}
             <input
               type="number"
               placeholder="Age"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="age"
               value={formData.age}
               onChange={handleChange}
               min="18"
               max="65"
-              disabled={!formData.gender} // Disabled until gender is selected
+              disabled={!formData.gender}
             />
-
-            {/* Height Field - Min/max values change based on gender */}
             <input
               type="number"
               placeholder="Height (cm)"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="height"
               value={formData.height}
@@ -189,14 +181,12 @@ const SignUp = () => {
               max={
                 formData.gender ? genderConfig[formData.gender].height.max : 999
               }
-              disabled={!formData.gender} // Disabled until gender is selected
+              disabled={!formData.gender}
             />
-
-            {/* Weight Field - Min/max values change based on gender */}
             <input
               type="number"
               placeholder="Weight (kg)"
-              className="text-black border-2 rounded-lg p-2 shadow-sm"
+              className="bg-base-200 input-primary rounded-lg p-2 shadow-sm focus:outline-none"
               required
               name="weight"
               value={formData.weight}
@@ -207,15 +197,14 @@ const SignUp = () => {
               max={
                 formData.gender ? genderConfig[formData.gender].weight.max : 999
               }
-              disabled={!formData.gender} // Disabled until gender is selected
+              disabled={!formData.gender}
             />
           </div>
         </form>
 
-        {/* Map Toggle Section */}
         <div className="mt-6">
           <h3
-            className="text-lg font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+            className="text-lg font-semibold mb-2 cursor-pointer text-accent-content hover:underline"
             onClick={() => setShowMap(!showMap)}
           >
             {showMap ? "Hide Map" : "Select Your Location"}
@@ -227,10 +216,9 @@ const SignUp = () => {
           )}
         </div>
 
-        {/* Submit Button */}
         <div className="flex flex-col items-center mt-6">
           <button
-            className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 w-full"
+            className="btn text-white font-bold py-2 px-6 rounded-lg shadow-md w-full"
             type="submit"
             onClick={handleSubmit}
           >
@@ -238,7 +226,7 @@ const SignUp = () => {
           </button>
           <p className="mt-2 text-sm">
             Already signed up? Log in ➡{" "}
-            <a href="/" className="text-blue-500 hover:underline">
+            <a href="/" className="text hover:underline">
               LOGIN
             </a>
           </p>

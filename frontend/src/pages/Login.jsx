@@ -30,13 +30,13 @@ const Login = () => {
   };
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="card bg-base-300 p-6 rounded-lg shadow-lg">
         {message && <p className="text-center text-red-500">{message}</p>}
-        <form action="" className="flex flex-col gap-4">
+        <form className="flex flex-col gap-4 bg-base-300">
           <input
             type="email"
             placeholder="Email"
-            className="text-black border-2 rounded-lg p-2 shadow-lg"
+            className="input-primary bg-base-200   rounded-lg p-2 shadow-sm focus:outline-none "
             required
             name="email"
             value={formData.email}
@@ -45,7 +45,7 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            className="text-black border-2 rounded-lg p-2 shadow-lg"
+            className="input-primary bg-base-200  rounded-lg p-2 shadow-sm focus:outline-none"
             required
             name="password"
             value={formData.password}
@@ -54,14 +54,14 @@ const Login = () => {
         </form>
         <div className="flex justify-center mt-6 flex-col">
           <button
-            className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-lg hover:bg-blue-600"
+            className="btn text-white font-bold py-2 px-6 rounded-lg shadow-md  w-full"
             onClick={handleSubmit}
           >
             Login
           </button>
           <p className="inline-block ">
             Have No Account? Sign Up here!! ➡{" "}
-            <a href="/signup" className="text-blue-500 hover:underline">
+            <a href="/signup" className="text hover:underline">
               Sign Up
             </a>
           </p>

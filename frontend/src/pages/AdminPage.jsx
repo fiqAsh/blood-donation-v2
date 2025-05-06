@@ -8,17 +8,23 @@ import BankFilter from "../components/BankFilter";
 import BankMapCard from "../components/BankCard";
 import BankRequests from "../components/BankRequests";
 import UserNotifications from "../components/UserNotifications";
+import { useNotificationStore } from "../stores/useNotificationStore";
 const AdminPage = () => {
   const { user, checkingAuth } = useAuthStore();
-  const { fetchBankData } = useBankStore();
+  const { fetchBankData, bankRequests, fetchBankRequests } = useBankStore();
+  const { notifications, getNotifications } = useNotificationStore();
   const [activeTab, setActiveTab] = useState("filter");
   const navigate = useNavigate();
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const unreadRequestCount = bankRequests.filter((n) => !n.isRead).length;
 
   useEffect(() => {
     if (!checkingAuth && user?.user?.role !== "admin") {
       navigate("/home");
     } else {
       fetchBankData();
+      getNotifications();
+      fetchBankRequests();
     }
   }, [checkingAuth, user]);
 
@@ -27,6 +33,7 @@ const AdminPage = () => {
   return (
     <div>
       <Navbar />
+      <hr />
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
 
@@ -52,6 +59,11 @@ const AdminPage = () => {
             onClick={() => setActiveTab("requests")}
           >
             Requests
+            {unreadRequestCount > 0 && (
+              <div className="badge badge-xs badge-secondary ml-1 rounded ">
+                {unreadRequestCount}
+              </div>
+            )}
           </a>
           <a
             role="tab"
@@ -61,6 +73,11 @@ const AdminPage = () => {
             onClick={() => setActiveTab("notifications")}
           >
             Notifications
+            {unreadCount > 0 && (
+              <div className="badge badge-xs badge-secondary ml-1 rounded ">
+                {unreadCount}
+              </div>
+            )}
           </a>
         </div>
 

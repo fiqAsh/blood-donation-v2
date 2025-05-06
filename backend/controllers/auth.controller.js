@@ -330,3 +330,32 @@ export const refreshAccessToken = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const calculateBMI = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findById(userId);
+
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const { weight, height } = user;
+
+    const heightInMeters = height / 100;
+
+    const bmi = weight / (heightInMeters * heightInMeters);
+    const bmiRounded = parseFloat(bmi.toFixed(2));
+
+    let category = "";
+    if (bmi < 18.5) category = "Underweight";
+    else if (bmi < 24.9) category = "Normal weight";
+    else if (bmi < 29.9) category = "Overweight";
+    else category = "Obese";
+
+    res.json({
+      bmi: bmiRounded,
+      category,
+    });
+  } catch (err) {
+    console.error("Error calculating BMI:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

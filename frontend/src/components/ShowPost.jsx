@@ -62,13 +62,13 @@ const ShowPost = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className="card bg-white shadow-md rounded-xl border hover:shadow-lg transition duration-300 overflow-hidden"
+          className="card bg-base-100 shadow-md rounded-xl border hover:bg-base-300 transition duration-300 overflow-hidden"
         >
           <div className="card-body space-y-2">
             <h2 className="card-title text-lg text-red-600">
               Blood Group: {post.bloodGroup}
             </h2>
-            <p className="text-gray-700">
+            <p className="text">
               <strong>Description:</strong> {post.description}
             </p>
             <p>

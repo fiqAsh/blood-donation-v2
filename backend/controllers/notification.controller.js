@@ -114,3 +114,24 @@ export const sendAdminNotification = async (bankRequest) => {
     console.error("Error sending admin notifications:", error);
   }
 };
+
+// Notify the user when their bank request is approved or rejected
+export const notifyUserBankRequestStatus = async (bankRequest, status) => {
+  try {
+    const userId = bankRequest.user;
+    const bankName = (await bankRequest.populate("bank", "name")).bank.name;
+
+    const message =
+      status === "accepted"
+        ? `Your bank request for ${bankRequest.quantity} units of ${bankRequest.bloodgroup} blood at ${bankName} has been accepted.`
+        : `Your bank request for ${bankRequest.quantity} units of ${bankRequest.bloodgroup} blood at ${bankName} has been rejected.`;
+
+    await Notification.create({
+      user: userId,
+      message,
+      post: bankRequest._id, // optional: helps link notification to request
+    });
+  } catch (error) {
+    console.error("Error notifying user about request status:", error.message);
+  }
+};

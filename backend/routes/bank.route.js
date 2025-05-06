@@ -10,6 +10,7 @@ import {
   getAllBankRequests,
   updateBankDetails,
   processBankrequest,
+  getUserBankRequest,
 } from "../controllers/bank.controller.js";
 
 const router = express.Router();
@@ -27,5 +28,7 @@ router.patch(
   authenticateAdmin,
   processBankrequest
 ); //ar
+
+router.get("/getUserBankRequest", authenticateUser, getUserBankRequest);
 
 export default router;

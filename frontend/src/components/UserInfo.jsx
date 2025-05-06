@@ -88,7 +88,7 @@ const UserInfo = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+      <div className="bg-secondary p-6 rounded-lg shadow-lg w-full max-w-2xl">
         {message && (
           <p className="text-center mb-4 text-green-500">{message}</p>
         )}
@@ -140,12 +140,12 @@ const UserInfo = () => {
               <option value="O-">O-</option>
             </select>
 
-            <div className="flex items-center border-2 rounded-lg p-2 shadow-sm">
-              <span className="text-gray-500 pr-2">+880</span>
+            <div className="flex items-center border-2 rounded-lg p-2 shadow-sm border-black">
+              <span className="text pr-2">+880</span>
               <input
                 type="text"
                 placeholder="1XXXXXXXXX"
-                className="text-black flex-1 outline-none"
+                className="text-black flex-1 shadow-sm"
                 required
                 name="mobile"
                 value={formData.mobile}
@@ -223,7 +223,7 @@ const UserInfo = () => {
           {/* Map Section */}
           <div className="col-span-2 mt-6">
             <h3
-              className="text-lg font-semibold mb-2 cursor-pointer text-blue-500 hover:underline"
+              className="text-lg font-semibold mb-2 cursor-pointer text hover:underline"
               onClick={() => setShowMap(!showMap)}
             >
               {showMap ? "Hide Map" : "Select Your Location"}
@@ -237,10 +237,7 @@ const UserInfo = () => {
 
           {/* Submit Button */}
           <div className="col-span-2 flex justify-center mt-6">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg shadow-md hover:bg-blue-600 w-full"
-            >
+            <button type="submit" className="btn w-full btn-primary">
               Update Profile
             </button>
           </div>

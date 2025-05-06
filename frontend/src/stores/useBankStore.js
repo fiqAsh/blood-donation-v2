@@ -10,6 +10,7 @@ export const useBankStore = create((set, get) => ({
   bankData: [],
   filteredBankData: [],
   bankRequests: [],
+  myRequests: [],
   loading: false,
 
   filterBanks: async (bloodgroup) => {
@@ -95,6 +96,17 @@ export const useBankStore = create((set, get) => ({
       return res;
     } catch (error) {
       console.log("error updating bank details", error.response?.data);
+    } finally {
+      set({ loading: false });
+    }
+  },
+  getUserBankRequests: async () => {
+    set({ loading: true });
+    try {
+      const res = await axiosInstance.get("/bank/getUserBankRequest");
+      set({ myRequests: res.data });
+    } catch (error) {
+      console.log("error fetching bank requests", error.response?.data);
     } finally {
       set({ loading: false });
     }

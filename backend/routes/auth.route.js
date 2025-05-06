@@ -8,6 +8,7 @@ import {
   updateUser,
   getAllUser,
   refreshAccessToken,
+  calculateBMI,
 } from "../controllers/auth.controller.js";
 import { authenticateUser } from "../utils/auth.middleware.js";
 
@@ -20,5 +21,6 @@ router.post("/refreshAccessToken", refreshAccessToken);
 router.get("/getUserProfile", authenticateUser, getUserProfile); //hjb
 router.get("/getAllUser", authenticateUser, getAllUser);
 router.patch("/updateUser", authenticateUser, updateUser); //hjb
+router.get("/calculateBmi", authenticateUser, calculateBMI);
 
 export default router;

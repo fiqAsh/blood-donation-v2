@@ -30,7 +30,7 @@ const BankFilter = () => {
           value={selectedGroup}
           onChange={(e) => setSelectedGroup(e.target.value)}
         >
-          <option value="" disabled>
+          <option value="" disabled className="text-black">
             Select Blood Group
           </option>
           {bloodGroups.map((group) => (
@@ -60,7 +60,7 @@ const BankFilter = () => {
               {filteredBankData.map((bank) => (
                 <div
                   key={bank._id}
-                  className="bg-white p-4 rounded shadow border"
+                  className="bg-base-100 p-4 rounded shadow border"
                 >
                   <h3 className="text-lg font-semibold mb-1">{bank.name}</h3>
                   <p>
@@ -68,7 +68,7 @@ const BankFilter = () => {
                     {bank.quantity ?? 0} units
                   </p>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text">
                     Location: Lat {bank.location.latitude}, Lng{" "}
                     {bank.location.longitude}
                   </p>
@@ -76,7 +76,7 @@ const BankFilter = () => {
               ))}
             </div>
           ) : (
-            <p className="text-center text-red-500 mt-4">
+            <p className="text-center text mt-4">
               No banks found for selected group.
             </p>
           )}

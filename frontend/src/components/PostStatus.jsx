@@ -23,8 +23,8 @@ const PostStatus = ({ userId }) => {
         posts.map((post) => (
           <div
             key={post._id}
-            className={`border p-4 rounded shadow flex flex-col gap-3 transition ${
-              post.canceled ? "bg-gray-200 text-gray-500" : "bg-white"
+            className={` border p-4 rounded shadow flex flex-col gap-3 transition  ${
+              post.canceled ? "bg-gray-200 text-gray-500" : "bg-base-100"
             }`}
           >
             <p className="font-semibold">{post.description}</p>

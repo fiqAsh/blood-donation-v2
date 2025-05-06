@@ -103,13 +103,13 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-8 p-6 border rounded shadow bg-white space-y-4">
-      <h2 className="text-xl font-bold text-center">Create a New Post</h2>
+    <div className="w-full mx-auto mt-8 p-6 border rounded shadow bg-base-100 space-y-4">
+      <h2 className=" text-xl font-bold text-center">Create a New Post</h2>
 
       {/* Progress Bar */}
       <div className="w-full bg-gray-200 rounded-full h-3">
         <div
-          className="bg-red-500 h-3 rounded-full"
+          className="bg-success h-3 rounded-full"
           style={{ width: `${((step + 1) / steps.length) * 100}%` }}
         ></div>
       </div>
@@ -133,9 +133,11 @@ const CreatePost = () => {
             value={formData.bloodGroup}
             onChange={(e) => updateField("bloodGroup", e.target.value)}
           >
-            <option value="">Select Blood Group</option>
+            <option value="" className="text-black">
+              Select Blood Group
+            </option>
             {bloodGroups.map((group) => (
-              <option key={group} value={group}>
+              <option key={group} value={group} className="text-black">
                 {group}
               </option>
             ))}
@@ -168,9 +170,11 @@ const CreatePost = () => {
             value={formData.urgency}
             onChange={(e) => updateField("urgency", e.target.value)}
           >
-            <option value="">Select Urgency</option>
+            <option value="" className="text-black">
+              Select Urgency
+            </option>
             {urgencyLevels.map((level) => (
-              <option key={level} value={level}>
+              <option key={level} value={level} className="text-black">
                 {level}
               </option>
             ))}
@@ -186,7 +190,7 @@ const CreatePost = () => {
         <button
           onClick={prevStep}
           disabled={step === 0}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded disabled:opacity-50"
+          className="px-4 py-2 btn btn-neutral"
         >
           Previous
         </button>
@@ -195,15 +199,12 @@ const CreatePost = () => {
           <button
             onClick={handleSubmit}
             disabled={loadingPosts}
-            className="px-4 py-2 bg-red-600 text-white rounded"
+            className="btn btn-neutral"
           >
             {loadingPosts ? "Submitting..." : "Submit"}
           </button>
         ) : (
-          <button
-            onClick={nextStep}
-            className="px-4 py-2 bg-blue-600 text-white rounded"
-          >
+          <button onClick={nextStep} className="btn btn-neutral">
             Next
           </button>
         )}

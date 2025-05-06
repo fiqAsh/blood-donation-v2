@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { usePostStore } from "../stores/usePostStore";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -11,31 +10,18 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-const SearchFilter = () => {
-  const { filterPost } = usePostStore();
+const DonorSearch = () => {
   const { searchForDonor, user } = useAuthStore();
-
-  const [urgency, setUrgency] = useState("");
-  const [time, setTime] = useState("");
   const [bloodGroup, setBloodGroup] = useState("");
   const [coords, setCoords] = useState(null);
   const [maxDistance, setMaxDistance] = useState("5000");
-
   const [donorResults, setDonorResults] = useState([]);
   const [donorSearchError, setDonorSearchError] = useState("");
+  const [showMap, setShowMap] = useState(false);
   const navigate = useNavigate();
-
-  const handlePostFilter = () => {
-    const filters = {};
-    if (urgency) filters.urgency = urgency;
-    if (time) filters.time = time;
-    filterPost(filters);
-  };
 
   const handleDonorSearch = async () => {
     if (!bloodGroup) return alert("Please select a blood group");
-
-    console.log("coords before search:", coords);
 
     const filters = {
       bloodgroup: bloodGroup,
@@ -48,7 +34,6 @@ const SearchFilter = () => {
 
     try {
       const result = await searchForDonor(filters);
-      console.log(result);
       const donors = result?.donors;
 
       if (donors?.length) {
@@ -71,8 +56,6 @@ const SearchFilter = () => {
         text,
       });
 
-      console.log("Navigating to messages with:", receiver);
-
       navigate("/messagepage", {
         state: {
           selectedUser: receiver,
@@ -85,81 +68,53 @@ const SearchFilter = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded shadow space-y-4">
-      <h2 className="text-lg font-semibold text-gray-700">Search & Filter</h2>
+    <div className="space-y-4 p-4 bg-base-100 rounded shadow">
+      <h3 className="text-lg font-semibold text-primary-accent">
+        Search Donors
+      </h3>
 
-      {/* Filter Posts */}
-      <div className="space-y-2">
-        <h3 className="font-medium">Filter Posts</h3>
-        <select
-          value={urgency}
-          onChange={(e) => setUrgency(e.target.value)}
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select Urgency</option>
-          <option>High</option>
-          <option>Medium</option>
-          <option>Low</option>
-        </select>
+      <select
+        value={bloodGroup}
+        onChange={(e) => setBloodGroup(e.target.value)}
+        className="w-full p-2 border rounded"
+      >
+        <option value="">Select Blood Group</option>
+        {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
+          <option key={group} value={group}>
+            {group}
+          </option>
+        ))}
+      </select>
 
-        <select
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-          className="w-full p-2 border rounded"
+      <div className="mt-6">
+        <h3
+          className="text-lg font-semibold mb-2 cursor-pointer text-accent-content hover:underline"
+          onClick={() => setShowMap(!showMap)}
         >
-          <option value="">Select Time</option>
-          <option value="today">Today</option>
-          <option value="1 week">Last 1 Week</option>
-          <option value="1 month">Last 1 Month</option>
-        </select>
-
-        <button
-          onClick={handlePostFilter}
-          className="w-full bg-blue-600 text-white p-2 rounded"
-        >
-          Filter Posts
-        </button>
+          {showMap ? "Hide Map" : "Select Your Location"}
+        </h3>
+        {showMap && (
+          <MapComponent
+            onLocationSelect={(lat, lng) => setCoords({ lat, lng })}
+          />
+        )}
       </div>
 
-      <hr />
+      <input
+        type="number"
+        placeholder="Max Distance (meters)"
+        value={maxDistance}
+        onChange={(e) => setMaxDistance(e.target.value)}
+        className="w-full p-2 border rounded"
+      />
 
-      {/* Search Donors */}
-      <div className="space-y-2">
-        <h3 className="font-medium">Search Donors</h3>
-        <select
-          value={bloodGroup}
-          onChange={(e) => setBloodGroup(e.target.value)}
-          className="w-full p-2 border rounded"
-        >
-          <option value="">Select Blood Group</option>
-          {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
-            <option key={group} value={group}>
-              {group}
-            </option>
-          ))}
-        </select>
+      <button
+        onClick={handleDonorSearch}
+        className="w-full btn btn-warning text-white p-2 rounded"
+      >
+        Search Donors
+      </button>
 
-        <MapComponent
-          onLocationSelect={(lat, lng) => setCoords({ lat, lng })}
-        />
-
-        <input
-          type="number"
-          placeholder="Max Distance (meters)"
-          value={maxDistance}
-          onChange={(e) => setMaxDistance(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-
-        <button
-          onClick={handleDonorSearch}
-          className="w-full bg-red-600 text-white p-2 rounded"
-        >
-          Search Donors
-        </button>
-      </div>
-
-      {/* Display Results */}
       {donorSearchError && (
         <p className="text-red-500 text-sm">{donorSearchError}</p>
       )}
@@ -179,7 +134,6 @@ const SearchFilter = () => {
                 </p>
                 <p className="text-sm text-gray-600">Mobile: {donor.mobile}</p>
 
-                {/* Only show message button if the logged-in user is not the donor */}
                 {donor._id !== user?.user._id && (
                   <button
                     onClick={() =>
@@ -202,4 +156,4 @@ const SearchFilter = () => {
   );
 };
 
-export default SearchFilter;
+export default DonorSearch;

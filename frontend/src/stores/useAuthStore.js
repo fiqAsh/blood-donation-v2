@@ -119,4 +119,17 @@ export const useAuthStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  calculateBMI: async () => {
+    set({ loading: true });
+    try {
+      const res = await axiosInstance.get("/auth/calculateBmi");
+      return res.data;
+    } catch (error) {
+      console.log("BMI calculation failed", error.response?.data);
+      return null;
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));
