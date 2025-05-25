@@ -113,12 +113,12 @@ const ShowPost = () => {
             {user?.user._id !== post.user._id && (
               <button
                 className="btn btn-primary w-full"
-                onClick={() =>
+                onClick={() => {
                   handleMessage(
                     post.user,
                     `Regarding your blood request: ${post.description}`
-                  )
-                }
+                  );
+                }}
               >
                 Message {post.user.name}
               </button>

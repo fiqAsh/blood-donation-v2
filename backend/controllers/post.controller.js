@@ -23,9 +23,10 @@ export const createPost = async (req, res) => {
       urgency,
     });
 
-    await sendNotifications(newPost);
+    const populatedPost = await newPost.populate("user", "_id name");
+    await sendNotifications(populatedPost);
 
-    res.status(201).json({ post: newPost });
+    res.status(201).json(populatedPost);
   } catch (error) {
     res
       .status(500)
@@ -38,7 +39,7 @@ export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find({ canceled: false })
       .sort({ createdAt: -1 })
-      .populate("user", "name");
+      .populate("user", "_id name");
 
     res.status(200).json(posts);
   } catch (error) {

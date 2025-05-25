@@ -23,7 +23,7 @@ const postSchema = new mongoose.Schema(
     urgency: {
       type: String,
       enum: ["High", "Medium", "Low"],
-      default: "low",
+      default: "Low",
     },
 
     canceled: { type: Boolean, default: false },

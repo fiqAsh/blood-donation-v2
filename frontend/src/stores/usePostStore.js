@@ -29,6 +29,7 @@ export const usePostStore = create((set, get) => ({
     set({ loadingPosts: true });
     try {
       const res = await axiosInstance.post("/post/createPost", postData);
+
       set((state) => ({ posts: [...state.posts, res.data] }));
       return res;
     } catch (error) {

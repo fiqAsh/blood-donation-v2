@@ -1,43 +1,10 @@
-// import React from "react";
-// import Navbar from "../components/Navbar";
-// import CreatePost from "../components/CreatePost";
-// import ShowPost from "../components/ShowPost";
-// import DonorSearch from "../components/DonorSearch";
-// import PostFilter from "../components/PostFilter";
-
-// const Home = () => {
-//   return (
-//     <div className="min-h-screen">
-//       {/* Top Navbar */}
-//       <Navbar />
-
-//       {/* Main content: 70/30 split */}
-//       <div className="flex flex-row h-full">
-//         {/* Left section */}
-//         <div className="w-full md:w-[70%] p-4">
-//           <CreatePost />
-//           <h1 className="text-2xl font-bold mb-4">Blood Donation Posts</h1>
-//           <PostFilter />
-//           <ShowPost />
-//         </div>
-
-//         {/* Right sidebar */}
-//         <div className="w-full md:w-[30%] p-4 border-l border-gray-200 bg-gray-50">
-//           <DonorSearch />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Home;
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import CreatePost from "../components/CreatePost";
 import ShowPost from "../components/ShowPost";
 import DonorSearch from "../components/DonorSearch";
 import PostFilter from "../components/PostFilter";
-import { FunnelIcon } from "@heroicons/react/24/outline"; // assuming you're using Heroicons
+import { FunnelIcon } from "@heroicons/react/24/outline";
 
 const Home = () => {
   const [showFilter, setShowFilter] = useState(false);

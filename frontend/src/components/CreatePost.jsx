@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapComponent from "./MapComponent";
 import { usePostStore } from "../stores/usePostStore";
 
@@ -14,7 +14,7 @@ const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const urgencyLevels = ["Low", "Medium", "High"];
 
 const CreatePost = () => {
-  const { createPost, loadingPosts } = usePostStore();
+  const { createPost, loadingPosts, fetchPosts } = usePostStore();
 
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -84,9 +84,10 @@ const CreatePost = () => {
 
   const handleSubmit = async () => {
     if (!validateStep()) return;
-    console.log("Submitting post:", formData);
+
     await createPost(formData);
-    // Optionally reset the form or redirect
+    await fetchPosts();
+
     setFormData({
       description: "",
       bloodGroup: "",
