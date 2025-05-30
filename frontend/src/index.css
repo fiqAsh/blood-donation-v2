@@ -11,11 +11,11 @@
   --color-base-200: oklch(41% 0.159 10.272);
   --color-base-300: oklch(45% 0.188 13.697);
   --color-base-content: oklch(94% 0.03 12.58);
-  --color-primary: oklch(70% 0.14 182.503);
+  --color-primary: oklch(74.57% 0.061 359.81);
   --color-primary-content: oklch(98% 0.014 180.72);
-  --color-secondary: oklch(55% 0.027 264.364);
+  --color-secondary: oklch(43.83% 0.053 59.24);
   --color-secondary-content: oklch(98% 0.002 247.839);
-  --color-accent: oklch(62% 0.214 259.815);
+  --color-accent: oklch(66.29% 0.083 84.08);
   --color-accent-content: oklch(97% 0.014 254.604);
   --color-neutral: oklch(58% 0.253 17.585);
   --color-neutral-content: oklch(96% 0.015 12.422);
@@ -35,4 +35,26 @@
   --border: 1.5px;
   --depth: 1;
   --noise: 1;
+}
+@keyframes slide-in-out {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  10% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  90% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.animate-slide-in-out {
+  animation: slide-in-out 2.5s ease-in-out forwards;
 }

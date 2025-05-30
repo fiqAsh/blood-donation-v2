@@ -51,7 +51,7 @@ const BankRequestPage = () => {
             Request Blood from Bank
           </h2>
           {selectedBank && (
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-accent-content">
               Selected Bank: <strong>{selectedBank.name}</strong>
               <br />
               Location: Lat {selectedBank.location.latitude}, Lng{" "}
@@ -67,9 +67,11 @@ const BankRequestPage = () => {
                 value={formData.bloodgroup}
                 onChange={handleInputChange}
               >
-                <option value="">Select Blood Group</option>
+                <option value="" className="text-black">
+                  Select Blood Group
+                </option>
                 {bloodGroups.map((group) => (
-                  <option key={group} value={group}>
+                  <option key={group} value={group} className="text-black">
                     {group}
                   </option>
                 ))}

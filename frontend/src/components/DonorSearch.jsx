@@ -14,7 +14,7 @@ const DonorSearch = () => {
   const { searchForDonor, user } = useAuthStore();
   const [bloodGroup, setBloodGroup] = useState("");
   const [coords, setCoords] = useState(null);
-  const [maxDistance, setMaxDistance] = useState("5000");
+
   const [donorResults, setDonorResults] = useState([]);
   const [donorSearchError, setDonorSearchError] = useState("");
   const [showMap, setShowMap] = useState(false);
@@ -28,7 +28,6 @@ const DonorSearch = () => {
       ...(coords && {
         latitude: coords.lat,
         longitude: coords.lng,
-        maxDistance,
       }),
     };
 
@@ -78,9 +77,11 @@ const DonorSearch = () => {
         onChange={(e) => setBloodGroup(e.target.value)}
         className="w-full p-2 border rounded"
       >
-        <option value="">Select Blood Group</option>
+        <option value="" className="text-black">
+          Select Blood Group
+        </option>
         {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
-          <option key={group} value={group}>
+          <option key={group} value={group} className="text-black">
             {group}
           </option>
         ))}
@@ -100,14 +101,6 @@ const DonorSearch = () => {
         )}
       </div>
 
-      <input
-        type="number"
-        placeholder="Max Distance (meters)"
-        value={maxDistance}
-        onChange={(e) => setMaxDistance(e.target.value)}
-        className="w-full p-2 border rounded"
-      />
-
       <button
         onClick={handleDonorSearch}
         className="w-full btn btn-warning text-white p-2 rounded"
@@ -121,34 +114,37 @@ const DonorSearch = () => {
 
       {donorResults.length > 0 && (
         <div className="pt-4">
-          <h4 className="font-semibold text-gray-600 mb-2">Donors Found:</h4>
+          <h4 className="font-bold text-info mb-2">Donors Found:</h4>
           <div className="space-y-2">
-            {donorResults.map((donor, idx) => (
-              <div
-                key={idx}
-                className="border p-3 rounded bg-gray-50 space-y-1"
-              >
-                <p className="font-medium">{donor.name}</p>
-                <p className="text-sm text-gray-600">
-                  Blood Group: {donor.bloodGroup}
-                </p>
-                <p className="text-sm text-gray-600">Mobile: {donor.mobile}</p>
-
-                {donor._id !== user?.user._id && (
-                  <button
-                    onClick={() =>
-                      handleMessage(
-                        donor,
-                        `Hi ${donor.name}, I found your profile through the donor search and would like to get in touch.`
-                      )
-                    }
-                    className="mt-2 btn btn-primary w-full"
+            {donorResults.map(
+              (donor, idx) =>
+                donor._id !== user?.user._id && (
+                  <div
+                    key={idx}
+                    className="border p-3 rounded bg-gray-50 space-y-1"
                   >
-                    Message {donor.name}
-                  </button>
-                )}
-              </div>
-            ))}
+                    <p className="font-medium text-accent">{donor.name}</p>
+                    <p className="text-sm font-bold text-error">
+                      Blood Group: {donor.bloodGroup}
+                    </p>
+                    <p className="text-sm font-bold text-error">
+                      Mobile: 0{donor.mobile}
+                    </p>
+
+                    <button
+                      onClick={() =>
+                        handleMessage(
+                          donor,
+                          `Hi ${donor.name}, I found your profile through the donor search and would like to get in touch.`
+                        )
+                      }
+                      className="mt-2 btn btn-primary w-full"
+                    >
+                      Message {donor.name}
+                    </button>
+                  </div>
+                )
+            )}
           </div>
         </div>
       )}

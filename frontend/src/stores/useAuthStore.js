@@ -111,7 +111,7 @@ export const useAuthStore = create((set, get) => ({
       const res = await axiosInstance.get(
         `/searchfilter/filterDonors?${query}`
       );
-      set({ user: res.data.user });
+
       return res.data;
     } catch (error) {
       console.log("Error searching for donors:", error.response?.data);

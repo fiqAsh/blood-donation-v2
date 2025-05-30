@@ -24,18 +24,22 @@ const PostStatus = ({ userId }) => {
           <div
             key={post._id}
             className={` border p-4 rounded shadow flex flex-col gap-3 transition  ${
-              post.canceled ? "bg-gray-200 text-gray-500" : "bg-base-100"
+              post.canceled ? "bg-gray-300 text-gray-500" : "bg-info-content"
             }`}
           >
-            <p className="font-semibold">{post.description}</p>
-            <p>Quantity: {post.quantity} Bags</p>
+            <p className="font-semibold text-info">
+              Description: {post.description}
+            </p>
+            <p className="text-error font-bold">
+              Quantity: {post.quantity} Bags
+            </p>
 
             {!post.canceled ? (
-              <span className="text-sm text-yellow-600 font-medium">
+              <span className="text-sm text-warning font-medium">
                 Status: Pending
               </span>
             ) : (
-              <span className="text-sm text-red-500 font-medium">
+              <span className="text-sm text-ghost font-medium">
                 Status: Canceled
               </span>
             )}

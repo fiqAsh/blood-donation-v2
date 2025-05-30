@@ -20,26 +20,26 @@ const UserBankRequest = () => {
           {myRequests.map((request) => (
             <li
               key={request._id}
-              className="p-4 border rounded shadow-md bg-white"
+              className="p-4 border rounded shadow-md bg-accent-content"
             >
-              <p>
+              <p className="text-error">
                 <strong>Bank:</strong> {request.bank.name}
               </p>
-              <p>
+              <p className="text-error">
                 <strong>Blood Group:</strong> {request.bloodgroup}
               </p>
-              <p>
+              <p className="text-error">
                 <strong>Quantity:</strong> {request.quantity} units
               </p>
-              <p>
+              <p className="text-error">
                 <strong>Status:</strong>{" "}
                 <span
                   className={
                     request.status === "pending"
-                      ? "text-yellow-500"
+                      ? "text-warning"
                       : request.status === "accepted"
-                      ? "text-green-600"
-                      : "text-red-500"
+                      ? "text-success"
+                      : "text-neutral"
                   }
                 >
                   {request.status}
