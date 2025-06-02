@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import DonorsPostsMap from "./Donors&PostsMap";
 
 import MapComponent from "./MapComponent";
 
@@ -67,15 +68,13 @@ const DonorSearch = () => {
   };
 
   return (
-    <div className="space-y-4 p-4 bg-base-100 rounded shadow">
-      <h3 className="text-lg font-semibold text-primary-accent">
-        Search Donors
-      </h3>
+    <div className="space-y-4 p-4 bg-primary rounded shadow m-2">
+      <h3 className="text-lg font-semibold text-black">Search Donors</h3>
 
       <select
         value={bloodGroup}
         onChange={(e) => setBloodGroup(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-accent text-black"
       >
         <option value="" className="text-black">
           Select Blood Group
@@ -89,7 +88,7 @@ const DonorSearch = () => {
 
       <div className="mt-6">
         <h3
-          className="text-lg font-semibold mb-2 cursor-pointer text-accent-content hover:underline"
+          className="text-lg font-semibold mb-2 cursor-pointer text-black hover:underline"
           onClick={() => setShowMap(!showMap)}
         >
           {showMap ? "Hide Map" : "Select Your Location"}
@@ -103,7 +102,7 @@ const DonorSearch = () => {
 
       <button
         onClick={handleDonorSearch}
-        className="w-full btn btn-warning text-white p-2 rounded"
+        className="w-full border border-black shadow-lg  btn btn-accent text-black p-2 rounded"
       >
         Search Donors
       </button>
@@ -113,23 +112,31 @@ const DonorSearch = () => {
       )}
 
       {donorResults.length > 0 && (
-        <div className="pt-4">
-          <h4 className="font-bold text-info mb-2">Donors Found:</h4>
+        <div className="pt-4 ">
+          <h4 className="font-bold text-black mb-2">Donors Found:</h4>
           <div className="space-y-2">
             {donorResults.map(
-              (donor, idx) =>
-                donor._id !== user?.user._id && (
+              (donor) =>
+                donor._id !== user?.user._id &&
+                (console.log(donor),
+                (
                   <div
-                    key={idx}
-                    className="border p-3 rounded bg-gray-50 space-y-1"
+                    key={donor._id}
+                    className="border border-black p-3 rounded bg-rose-200 space-y-1"
                   >
-                    <p className="font-medium text-accent">{donor.name}</p>
+                    <p className="font-medium text-base-100">{donor.name}</p>
                     <p className="text-sm font-bold text-error">
                       Blood Group: {donor.bloodGroup}
                     </p>
                     <p className="text-sm font-bold text-error">
                       Mobile: 0{donor.mobile}
                     </p>
+                    <div className="h-40 mt-2 rounded overflow-hidden">
+                      <DonorsPostsMap
+                        latitude={donor.location.coordinates[1]}
+                        longitude={donor.location.coordinates[0]}
+                      />
+                    </div>
 
                     <button
                       onClick={() =>
@@ -138,12 +145,12 @@ const DonorSearch = () => {
                           `Hi ${donor.name}, I found your profile through the donor search and would like to get in touch.`
                         )
                       }
-                      className="mt-2 btn btn-primary w-full"
+                      className="mt-2 btn btn-accent text-black w-full"
                     >
                       Message {donor.name}
                     </button>
                   </div>
-                )
+                ))
             )}
           </div>
         </div>

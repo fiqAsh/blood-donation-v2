@@ -104,13 +104,13 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-8 p-6 border rounded shadow bg-base-100 space-y-4">
-      <h2 className=" text-xl font-bold text-center">Create a New Post</h2>
+    <div className="w-full mx-auto mt-8 p-6 border rounded shadow bg-base-100 space-y-4 focus:outline-none">
+      <h2 className=" text-xl font-bold text-center">Request For Blood</h2>
 
       {/* Progress Bar */}
-      <div className="w-full bg-gray-200 rounded-full h-3">
+      <div className="w-full bg-primary rounded-full h-3">
         <div
-          className="bg-success h-3 rounded-full"
+          className="bg-info h-3 rounded-full"
           style={{ width: `${((step + 1) / steps.length) * 100}%` }}
         ></div>
       </div>
@@ -120,8 +120,8 @@ const CreatePost = () => {
       <div>
         {step === 0 && (
           <textarea
-            className="w-full p-2 border rounded"
-            rows="4"
+            className="w-full p-2  rounded-lg shadow-lg bg-primary text-black "
+            rows="3"
             placeholder="Describe your situation..."
             value={formData.description}
             onChange={(e) => updateField("description", e.target.value)}
@@ -130,7 +130,7 @@ const CreatePost = () => {
 
         {step === 1 && (
           <select
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-primary text-black "
             value={formData.bloodGroup}
             onChange={(e) => updateField("bloodGroup", e.target.value)}
           >
@@ -148,7 +148,7 @@ const CreatePost = () => {
         {step === 2 && (
           <input
             type="number"
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-primary text-black "
             placeholder="Number of bags required (1-10)"
             min={1}
             max={10}
@@ -167,7 +167,7 @@ const CreatePost = () => {
 
         {step === 4 && (
           <select
-            className="w-full p-2 border rounded"
+            className="w-full p-2 border rounded bg-primary text-black "
             value={formData.urgency}
             onChange={(e) => updateField("urgency", e.target.value)}
           >
@@ -191,7 +191,7 @@ const CreatePost = () => {
         <button
           onClick={prevStep}
           disabled={step === 0}
-          className="px-4 py-2 btn btn-neutral"
+          className="px-4 py-2 btn btn-accent"
         >
           Previous
         </button>
@@ -200,12 +200,12 @@ const CreatePost = () => {
           <button
             onClick={handleSubmit}
             disabled={loadingPosts}
-            className="btn btn-neutral"
+            className="btn btn-accent"
           >
             {loadingPosts ? "Submitting..." : "Submit"}
           </button>
         ) : (
-          <button onClick={nextStep} className="btn btn-neutral">
+          <button onClick={nextStep} className="btn btn-accent">
             Next
           </button>
         )}

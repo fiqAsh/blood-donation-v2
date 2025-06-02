@@ -44,7 +44,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/login", formData);
       set({ user: res.data.user });
-      console.log(res.data.user.role);
+
       return res;
     } catch (error) {
       console.log("login failed", error.response?.data);

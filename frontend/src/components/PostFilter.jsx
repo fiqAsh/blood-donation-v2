@@ -14,13 +14,13 @@ const PostFilter = () => {
   };
 
   return (
-    <div className="space-y-2 p-4 bg-base-300 rounded shadow">
+    <div className="space-y-2 p-4 bg-base-300 rounded shadow mb-4">
       <h3 className="text-lg font-semibold text">Filter Posts</h3>
 
       <select
         value={urgency}
         onChange={(e) => setUrgency(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-accent text-black"
       >
         <option value="">Select Urgency</option>
         <option value="High">High</option>
@@ -31,7 +31,7 @@ const PostFilter = () => {
       <select
         value={time}
         onChange={(e) => setTime(e.target.value)}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border rounded bg-accent text-black"
       >
         <option value="">Select Time</option>
         <option value="today">Today</option>
@@ -39,7 +39,10 @@ const PostFilter = () => {
         <option value="1 month">Last 1 Month</option>
       </select>
 
-      <button onClick={handlePostFilter} className="btn w-full">
+      <button
+        onClick={handlePostFilter}
+        className="btn border-black btn-accent w-full text-black"
+      >
         Filter Posts
       </button>
     </div>

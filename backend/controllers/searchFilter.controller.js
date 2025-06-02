@@ -81,7 +81,6 @@ export const filterDonors = async (req, res) => {
       bloodGroup: 1,
     });
 
-    // 🔹 Handle case: No matching donors found
     if (!donors.length) {
       return res.status(404).json({
         message: "No donors found for the given blood group and location",

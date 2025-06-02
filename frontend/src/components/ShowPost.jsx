@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import { usePostStore } from "../stores/usePostStore";
 import { useAuthStore } from "../stores/useAuthStore";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+
 import { useNavigate } from "react-router-dom";
-import L from "leaflet";
+
 import axios from "axios";
 import Loading from "./Loading";
+import DonorsPostsMap from "./Donors&PostsMap";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -20,12 +21,6 @@ const ShowPost = () => {
   useEffect(() => {
     fetchPosts();
   }, []);
-
-  const markerIcon = new L.Icon({
-    iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon.png",
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-  });
 
   const handleMessage = async (receiver, text) => {
     try {
@@ -58,14 +53,14 @@ const ShowPost = () => {
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {posts.map((post) => (
         <div
           key={post._id}
-          className="card bg-base-100 shadow-md rounded-xl border hover:bg-base-300 transition duration-300 overflow-hidden"
+          className="card bg-primary shadow-md rounded-xl border hover:bg-rose-400 transition duration-300 overflow-hidden"
         >
           <div className="card-body space-y-2">
-            <h2 className="card-title text-lg text-red-600">
+            <h2 className="card-title text-lg text-primary-content">
               Blood Group: {post.bloodGroup}
             </h2>
             <p className="text">
@@ -92,27 +87,16 @@ const ShowPost = () => {
 
             {post.location && (
               <div className="h-40 mt-2 rounded overflow-hidden">
-                <MapContainer
-                  center={[post.location.latitude, post.location.longitude]}
-                  zoom={13}
-                  scrollWheelZoom={false}
-                  style={{ height: "100%", width: "100%" }}
-                >
-                  <TileLayer
-                    attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
-                  <Marker
-                    position={[post.location.latitude, post.location.longitude]}
-                    icon={markerIcon}
-                  />
-                </MapContainer>
+                <DonorsPostsMap
+                  latitude={post.location.latitude}
+                  longitude={post.location.longitude}
+                />
               </div>
             )}
 
-            {user?.user._id !== post.user._id && (
+            {user?.user?._id !== post?.user?._id && (
               <button
-                className="btn btn-primary w-full"
+                className="btn btn-accent border rounded-lg shadow-lg w-full"
                 onClick={() => {
                   handleMessage(
                     post.user,

@@ -41,7 +41,9 @@ const Navbar = () => {
     <div className="navbar w-full bg-base-200 shadow-md p-4">
       <div className="w-full flex justify-between items-center">
         {/* Left: Logo or Title */}
-        <div className="text-xl font-bold">Save Lives</div>
+        <div className="text-xl font-bold">
+          <a href="/home">Save Lives</a>
+        </div>
 
         {/* Mobile toggle button */}
         <div className="md:hidden">
