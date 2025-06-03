@@ -36,39 +36,44 @@ const BankMapCard = ({ onBankSelect }) => {
   };
 
   return (
-    <div className="p-4 bg-base-200 rounded-lg shadow mb-6">
-      <h2 className="text-xl font-bold mb-4">Blood Bank Locations</h2>
-      <MapContainer
-        center={dhakaPosition}
-        zoom={12}
-        style={{ height: "500px", width: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
+    <div className="p-4 bg-primary rounded-lg shadow mb-6 border border-black">
+      <h2 className="text-xl font-bold mb-4 text-accent-content ">
+        Blood Bank Locations
+      </h2>
+      <div className="border border-black">
+        <MapContainer
+          center={dhakaPosition}
+          zoom={12}
+          style={{ height: "500px", width: "100%" }}
+        >
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          />
 
-        {bankData.map((bank) => (
-          <Marker
-            key={bank._id}
-            position={[bank.location.latitude, bank.location.longitude]}
-            icon={customIcon}
-            eventHandlers={{
-              click: () => onBankSelect(bank),
-            }}
-          >
-            <Popup>
-              <div>
-                <h3 className="font-bold">{bank.name}</h3>
-                <p className="text-sm text-gray-500">
-                  Lat: {bank.location.latitude}, Lng: {bank.location.longitude}
-                </p>
-                {getInventoryList(bank.bloodInventory)}
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
+          {bankData.map((bank) => (
+            <Marker
+              key={bank._id}
+              position={[bank.location.latitude, bank.location.longitude]}
+              icon={customIcon}
+              eventHandlers={{
+                click: () => onBankSelect(bank),
+              }}
+            >
+              <Popup>
+                <div>
+                  <h3 className="font-bold">{bank.name}</h3>
+                  <p className="text-sm text-gray-500">
+                    Lat: {bank.location.latitude}, Lng:{" "}
+                    {bank.location.longitude}
+                  </p>
+                  {getInventoryList(bank.bloodInventory)}
+                </div>
+              </Popup>
+            </Marker>
+          ))}
+        </MapContainer>
+      </div>
     </div>
   );
 };

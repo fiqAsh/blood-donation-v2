@@ -30,7 +30,7 @@ const BankRequests = () => {
           {bankRequests.map((request) => (
             <div
               key={request._id}
-              className="border p-4 rounded-lg shadow-md hover:shadow-lg"
+              className="border p-4 rounded-lg shadow-md hover:shadow-lg text-black bg-primary"
             >
               <h3 className="font-bold text-lg">{request.bank.name}</h3>
               <p>
@@ -43,6 +43,9 @@ const BankRequests = () => {
               </p>
               <p>
                 <span className="font-semibold">Status:</span> {request.status}
+              </p>
+              <p className="text-sm ">
+                Requested at: {new Date(request.createdAt).toLocaleString()}
               </p>
 
               <div className="flex justify-end gap-4 mt-4">

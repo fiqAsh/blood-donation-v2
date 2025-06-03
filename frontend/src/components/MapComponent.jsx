@@ -44,6 +44,7 @@ const MapComponent = ({ onLocationSelect }) => {
       center={dhakaPosition}
       zoom={13}
       style={{ height: "400px", width: "100%" }}
+      scrollWheelZoom={false}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

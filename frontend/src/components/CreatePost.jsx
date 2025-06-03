@@ -104,7 +104,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="w-full mx-auto mt-8 p-6 border rounded shadow bg-base-100 space-y-4 focus:outline-none">
+    <div className="w-full mx-auto mt-8 p-6 border border-black rounded shadow bg-base-100 space-y-4 focus:outline-none">
       <h2 className=" text-xl font-bold text-center">Request For Blood</h2>
 
       {/* Progress Bar */}

@@ -23,14 +23,14 @@ const PostStatus = ({ userId }) => {
         posts.map((post) => (
           <div
             key={post._id}
-            className={` border p-4 rounded shadow flex flex-col gap-3 transition  ${
-              post.canceled ? "bg-gray-300 text-gray-500" : "bg-info-content"
+            className={` border border-black m-1 p-4 rounded shadow flex flex-col gap-3 transition  ${
+              post.canceled ? "bg-gray-300 text-black" : "bg-secondary"
             }`}
           >
-            <p className="font-semibold text-info">
+            <p className="font-semibold text-primary-content">
               Description: {post.description}
             </p>
-            <p className="text-error font-bold">
+            <p className="text-primary-content font-bold">
               Quantity: {post.quantity} Bags
             </p>
 
@@ -50,7 +50,7 @@ const PostStatus = ({ userId }) => {
               className={`px-4 py-2 rounded mt-2 w-max transition text-white ${
                 post.canceled
                   ? "bg-gray-400 cursor-not-allowed"
-                  : "bg-red-500 hover:bg-red-600"
+                  : "btn btn-accent"
               }`}
             >
               {post.canceled ? "Canceled" : "Cancel Post"}

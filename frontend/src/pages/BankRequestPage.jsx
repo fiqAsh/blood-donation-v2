@@ -42,16 +42,15 @@ const BankRequestPage = () => {
 
   return (
     <>
-      <Navbar /> {/* 👈 Add Navbar at the very top */}
-      <div className="p-6 max-w-4xl mx-auto">
+      <div className="p-6 max-w-4xl mx-auto ">
         <BankMapCard onBankSelect={setSelectedBank} />
 
-        <div className="bg-base-200 p-6 rounded-lg shadow mt-6">
-          <h2 className="text-lg font-semibold mb-4">
+        <div className="bg-primary p-6 rounded-lg shadow mt-6">
+          <h2 className="text-lg font-semibold mb-4 text-black">
             Request Blood from Bank
           </h2>
           {selectedBank && (
-            <div className="mb-4 text-sm text-accent-content">
+            <div className="mb-4 text-sm text-black">
               Selected Bank: <strong>{selectedBank.name}</strong>
               <br />
               Location: Lat {selectedBank.location.latitude}, Lng{" "}
@@ -60,10 +59,12 @@ const BankRequestPage = () => {
           )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block mb-1 font-medium">Blood Group</label>
+              <label className="block mb-1 font-medium text-black">
+                Blood Group
+              </label>
               <select
                 name="bloodgroup"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border border-black rounded bg-secondary"
                 value={formData.bloodgroup}
                 onChange={handleInputChange}
               >
@@ -78,19 +79,24 @@ const BankRequestPage = () => {
               </select>
             </div>
             <div>
-              <label className="block mb-1 font-medium">Quantity (bags)</label>
+              <label className="block mb-1 font-medium text-black">
+                Quantity (bags)
+              </label>
               <input
                 type="number"
                 name="quantity"
                 value={formData.quantity}
                 onChange={handleInputChange}
-                className="input input-bordered w-full"
+                className="input input-bordered w-full bg-secondary border border-black"
                 min={1}
                 max={10}
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary w-full">
+            <button
+              type="submit"
+              className="btn btn-secondary w-full text-black font-bold border border-black"
+            >
               Submit Request
             </button>
           </form>

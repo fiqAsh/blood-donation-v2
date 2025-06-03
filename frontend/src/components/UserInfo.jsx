@@ -87,8 +87,8 @@ const UserInfo = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-4">
-      <div className="bg-secondary p-6 rounded-lg shadow-lg w-full max-w-2xl">
+    <div className="flex justify-center items-center min-h-screen p-4 ">
+      <div className="bg-secondary p-6 rounded-lg shadow-lg w-full max-w-2xl border border-black">
         {message && (
           <p className="text-center mb-4 text-green-500">{message}</p>
         )}
@@ -237,7 +237,7 @@ const UserInfo = () => {
 
           {/* Submit Button */}
           <div className="col-span-2 flex justify-center mt-6">
-            <button type="submit" className="btn w-full btn-primary">
+            <button type="submit" className="btn w-full btn-primary border">
               Update Profile
             </button>
           </div>

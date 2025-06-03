@@ -93,29 +93,24 @@ export const sendNotifications = async (post) => {
   }
 };
 
-//raz
-export const sendAdminNotification = async (bankRequest) => {
+export const sendAdminNotification = async (bankRequest, name) => {
   try {
-    // Find all admin users
     const admins = await User.find({ role: "admin" });
 
-    if (admins.length === 0) return; // No admins found, no notifications needed
+    if (admins.length === 0) return;
 
-    // Create notifications for all admins
     const notifications = admins.map((admin) => ({
       user: admin._id,
-      message: `New bank request for ${bankRequest.quantity} units of ${bankRequest.bloodgroup} blood at ${bankRequest.bank}.`,
+      message: `New bank request for ${bankRequest.quantity} units of ${bankRequest.bloodgroup} blood at ${name}.`,
       post: bankRequest._id,
     }));
 
-    // Save notifications to the database
     await Notification.insertMany(notifications);
   } catch (error) {
     console.error("Error sending admin notifications:", error);
   }
 };
 
-// Notify the user when their bank request is approved or rejected
 export const notifyUserBankRequestStatus = async (bankRequest, status) => {
   try {
     const userId = bankRequest.user;

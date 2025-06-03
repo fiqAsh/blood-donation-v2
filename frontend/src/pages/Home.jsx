@@ -11,14 +11,9 @@ const Home = () => {
 
   return (
     <div className="relative min-h-screen">
-      <div className="fixed top-0 left-0 w-full z-50">
-        <Navbar />
-        <hr />
-      </div>
-
       <div className="pt-[72px] flex flex-row">
         {" "}
-        <div className="w-full md:w-[70%] p-4 bg-base-100 overflow-y-auto max-h-[calc(100vh-72px)]">
+        <div className="w-full md:w-[70%] p-4 bg-base-100 overflow-y-auto max-h-[calc(100vh-72px)] ">
           <CreatePost />
 
           <div className="flex items-center justify-between mb-4 mt-4">
@@ -27,7 +22,7 @@ const Home = () => {
             </h1>
             <button
               onClick={() => setShowFilter((prev) => !prev)}
-              className="btn btn-accent btn-sm border shadow-lg"
+              className="btn btn-accent btn-sm border  shadow-lg"
               title="Toggle Filter"
             >
               <FunnelIcon className="h-6 w-6 text-white" />

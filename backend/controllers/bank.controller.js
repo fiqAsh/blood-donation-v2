@@ -3,8 +3,6 @@ import BankRequest from "../models/bankrequest.model.js";
 import { sendAdminNotification } from "./notification.controller.js";
 import { notifyUserBankRequestStatus } from "./notification.controller.js";
 
-//request related to banks that the user makes
-//raz
 export const createBankRequest = async (req, res) => {
   try {
     const { bank, bloodgroup, quantity, location } = req.body;
@@ -20,11 +18,10 @@ export const createBankRequest = async (req, res) => {
       bloodgroup,
       quantity,
       location,
-
       user: req.user._id,
     });
 
-    await sendAdminNotification(newBankRequest);
+    await sendAdminNotification(newBankRequest, bankDoc.name);
 
     res
       .status(200)
@@ -36,13 +33,12 @@ export const createBankRequest = async (req, res) => {
   }
 };
 
-//admin handles these parts
-//ar
 export const getAllBankRequests = async (req, res) => {
   try {
-    const requests = await BankRequest.find().populate("bank", "name");
+    const requests = await BankRequest.find()
+      .populate("bank", "name")
+      .sort({ createdAt: -1 });
     res.status(200).json(requests);
-    console.log(requests);
   } catch (error) {
     res
       .status(500)
@@ -50,7 +46,6 @@ export const getAllBankRequests = async (req, res) => {
   }
 };
 
-//hjb
 export const getAllBankData = async (req, res) => {
   try {
     const bankData = await Bank.find();
@@ -88,7 +83,7 @@ export const updateBankDetails = async (req, res) => {
       .json({ message: "Failed to update bank", error: error.message });
   }
 };
-//ar
+
 export const processBankrequest = async (req, res) => {
   try {
     const { requestid } = req.params;

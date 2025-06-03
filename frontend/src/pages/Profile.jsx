@@ -28,12 +28,9 @@ const Profile = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-base-200">
-      <Navbar />
-      <hr />
-
+    <div className="min-h-screen bg-base-200 ">
       {/* User Info */}
-      <div className="w-full bg-black py-4 px-6 border-b border-gray-300">
+      <div className="w-full bg-primary text-primary-content py-4 px-6 border-b border-gray-300">
         <h2 className="text-lg font-semibold text">Hello, {user.user.name}</h2>
         {bmiResult && (
           <div className="mt-2 text-sm text">

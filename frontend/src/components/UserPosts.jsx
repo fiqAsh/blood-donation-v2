@@ -64,7 +64,7 @@ const UserPost = ({ userId }) => {
         posts.map((post) => (
           <div
             key={post._id}
-            className="border p-4 rounded shadow flex flex-col gap-3"
+            className="border p-4 rounded shadow flex flex-col gap-3 bg-secondary"
           >
             {editingPostId === post._id ? (
               <>
@@ -118,13 +118,13 @@ const UserPost = ({ userId }) => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEditClick(post)}
-                    className="bg-yellow-500 text-white px-4 py-1 rounded"
+                    className=" btn btn-warning text-black px-4 py-1 rounded"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(post._id)}
-                    className="bg-red-500 text-white px-4 py-1 rounded"
+                    className="btn bg-red-600  text-black  px-4 py-1 rounded"
                   >
                     Delete
                   </button>

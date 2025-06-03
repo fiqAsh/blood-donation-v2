@@ -57,20 +57,20 @@ const ShowPost = () => {
       {posts.map((post) => (
         <div
           key={post._id}
-          className="card bg-primary shadow-md rounded-xl border hover:bg-rose-400 transition duration-300 overflow-hidden"
+          className="card bg-primary shadow-md rounded-xl border hover:bg-rose-400 transition duration-300 overflow-hidden border-black"
         >
-          <div className="card-body space-y-2">
-            <h2 className="card-title text-lg text-primary-content">
+          <div className="card-body space-y-2 ">
+            <h2 className="card-title text-lg text-black">
               Blood Group: {post.bloodGroup}
             </h2>
-            <p className="text">
+            <p className=" text-black">
               <strong>Description:</strong> {post.description}
             </p>
-            <p>
+            <p className=" text-black">
               <strong>Quantity:</strong> {post.quantity} bag
               {post.quantity > 1 && "s"}
             </p>
-            <p>
+            <p className=" text-black">
               <strong>Urgency:</strong>{" "}
               <span
                 className={`badge ${
@@ -86,7 +86,7 @@ const ShowPost = () => {
             </p>
 
             {post.location && (
-              <div className="h-40 mt-2 rounded overflow-hidden">
+              <div className="h-40 mt-2 rounded overflow-hidden ">
                 <DonorsPostsMap
                   latitude={post.location.latitude}
                   longitude={post.location.longitude}

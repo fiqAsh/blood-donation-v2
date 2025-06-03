@@ -1,5 +1,3 @@
-// components/PostMap.jsx
-import React from "react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 
@@ -13,7 +11,7 @@ const DonorsPostsMap = ({ latitude, longitude }) => {
   if (!latitude || !longitude) return null;
 
   return (
-    <div className="h-40 mt-2 rounded overflow-hidden">
+    <div className="h-40 mt-2 rounded overflow-hidden  border border-black ">
       <MapContainer
         center={[latitude, longitude]}
         zoom={13}

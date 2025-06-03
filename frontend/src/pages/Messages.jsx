@@ -107,9 +107,6 @@ const Messages = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <Navbar />
-      <hr />
-
       <div className="flex flex-1 overflow-hidden">
         {/* User List */}
         <div className="w-1/4 bg-base-200 p-4 overflow-y-auto">

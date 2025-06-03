@@ -30,7 +30,7 @@ const Navbar = () => {
         setMenuOpen(false);
       }}
       className={`btn w-full md:w-auto ${
-        isActive(to) ? "btn-primary" : "btn-neutral"
+        isActive(to) ? "btn-secondary" : "btn btn-accent"
       } ${extraClass}`}
     >
       {label}
@@ -38,10 +38,10 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar w-full bg-base-200 shadow-md p-4">
+    <div className="navbar w-full bg-base-100 shadow-md p-4">
       <div className="w-full flex justify-between items-center">
         {/* Left: Logo or Title */}
-        <div className="text-xl font-bold">
+        <div className="text-xl font-bold text-accent-content">
           <a href="/home">Save Lives</a>
         </div>
 
@@ -49,13 +49,12 @@ const Navbar = () => {
         <div className="md:hidden">
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="btn btn-ghost"
+            className="btn btn-accent"
           >
             {menuOpen ? <X /> : <Menu />}
           </button>
         </div>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex space-x-4 items-center">
           {!isAdmin && (
             <>
@@ -69,10 +68,10 @@ const Navbar = () => {
             <NavButton
               to="/adminpage"
               label="Admin Panel"
-              extraClass="btn-warning"
+              extraClass="btn-accent"
             />
           )}
-          <button onClick={handleLogout} className="btn btn-neutral">
+          <button onClick={handleLogout} className="btn btn-accent">
             Logout
           </button>
         </div>

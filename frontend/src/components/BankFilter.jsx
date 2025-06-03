@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useBankStore } from "../stores/useBankStore";
 
+import DonorsPostsMap from "./Donors&PostsMap";
+
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
 const BankFilter = () => {
@@ -40,12 +42,15 @@ const BankFilter = () => {
           ))}
         </select>
 
-        <button className="btn btn-primary" onClick={handleSearch}>
+        <button className="btn btn-primary text-black" onClick={handleSearch}>
           Search
         </button>
 
         {hasSearched && (
-          <button className="btn btn-secondary" onClick={handleReset}>
+          <button
+            className="btn btn-secondary text-black"
+            onClick={handleReset}
+          >
             Reset
           </button>
         )}
@@ -60,18 +65,21 @@ const BankFilter = () => {
               {filteredBankData.map((bank) => (
                 <div
                   key={bank._id}
-                  className="bg-base-100 p-4 rounded shadow border"
+                  className="bg-primary p-4 rounded shadow border"
                 >
-                  <h3 className="text-lg font-semibold mb-1">{bank.name}</h3>
-                  <p>
-                    <span className="font-medium">Available:</span>{" "}
+                  <h3 className="text-lg text-black font-semibold mb-1">
+                    {bank.name}
+                  </h3>
+                  <p className="text-black">
+                    <span className="font-medium ">Available:</span>{" "}
                     {bank.quantity ?? 0} units
                   </p>
-
-                  <p className="text-sm text">
-                    Location: Lat {bank.location.latitude}, Lng{" "}
-                    {bank.location.longitude}
-                  </p>
+                  <div>
+                    <DonorsPostsMap
+                      latitude={bank.location.latitude}
+                      longitude={bank.location.longitude}
+                    />
+                  </div>
                 </div>
               ))}
             </div>

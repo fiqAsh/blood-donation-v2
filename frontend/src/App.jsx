@@ -15,6 +15,7 @@ import AdminPage from "./pages/AdminPage";
 
 import Messages from "./pages/Messages";
 import BankRequestPage from "./pages/BankRequestPage";
+import Layout from "./components/Layout";
 
 const AuthWrapper = ({ children }) => {
   const { checkAuth, checkingAuth } = useAuthStore();
@@ -43,13 +44,16 @@ const App = () => {
     <Router>
       <AuthWrapper>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route element={<Layout />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/adminpage" element={<AdminPage />} />
+            <Route path="/messagepage" element={<Messages />} />
+            <Route path="/bankrequest" element={<BankRequestPage />} />
+          </Route>
+
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/adminpage" element={<AdminPage />} />
-          <Route path="/messagepage" element={<Messages />} />
-          <Route path="/bankrequest" element={<BankRequestPage />} />
         </Routes>
       </AuthWrapper>
     </Router>
