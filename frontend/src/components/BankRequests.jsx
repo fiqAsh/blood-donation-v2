@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useBankStore } from "../stores/useBankStore";
 import Loading from "./Loading";
 
@@ -6,17 +6,14 @@ const BankRequests = () => {
   const { bankRequests, loading, fetchBankRequests, processBankRequest } =
     useBankStore();
 
-  // Fetch bank requests on component mount
   useEffect(() => {
     fetchBankRequests();
   }, [fetchBankRequests]);
 
-  // Handle the approval or rejection of a request
   const handleProcessRequest = (requestId, action) => {
     processBankRequest(requestId, action);
   };
 
-  // If requests are still loading, show the loading spinner
   if (loading) return <Loading />;
 
   return (

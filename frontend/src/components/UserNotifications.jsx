@@ -25,7 +25,7 @@ const UserNotification = () => {
 
   return (
     <div className="p-4 space-y-4">
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-4 ">
         <button
           onClick={markAllNotificationsAsRead}
           disabled={notifications.length === 0}
@@ -49,9 +49,10 @@ const UserNotification = () => {
           Delete All Notifications
         </button>
       </div>
+      <hr className="bg-white" />
 
       {notifications.length === 0 ? (
-        <p className="text-center text-gray-500">No notifications found.</p>
+        <p className="text-center text-white">No notifications found.</p>
       ) : (
         notifications.map((notification) => (
           <div

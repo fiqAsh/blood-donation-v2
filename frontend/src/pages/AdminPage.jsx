@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useBankStore } from "../stores/useBankStore";
 import Loading from "../components/Loading";
-import Navbar from "../components/Navbar";
 import BankFilter from "../components/BankFilter";
 import BankMapCard from "../components/BankCard";
 import BankRequests from "../components/BankRequests";

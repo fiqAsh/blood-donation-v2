@@ -1,8 +1,6 @@
-// BankRequestPage.jsx
 import { useState } from "react";
 import BankMapCard from "../components/BankCard";
 import { useBankStore } from "../stores/useBankStore";
-import Navbar from "../components/Navbar";
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
