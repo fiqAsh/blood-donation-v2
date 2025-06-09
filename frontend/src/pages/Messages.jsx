@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { useAuthStore } from "../stores/useAuthStore";
 import Loading from "../components/Loading";
-import Navbar from "../components/Navbar";
+
 import { useLocation } from "react-router-dom";
 
 const axiosInstance = axios.create({
@@ -18,8 +18,13 @@ const Messages = () => {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
   const socket = useRef(null);
+  const messagesEndRef = useRef(null);
 
   const location = useLocation();
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   // 👇 Initialize Socket.IO and register user
   useEffect(() => {
@@ -51,7 +56,7 @@ const Messages = () => {
     if (!user) return;
 
     axiosInstance
-      .get("/messages/users")
+      .get("/messages/conversations")
       .then((res) => setUsers(res.data))
       .catch((err) =>
         console.error("Error fetching users:", err.response?.data)
@@ -77,6 +82,10 @@ const Messages = () => {
         console.error("Error fetching messages:", err.response?.data)
       );
   }, [selectedUser]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = async () => {
     if (!text.trim()) return;
@@ -155,15 +164,22 @@ const Messages = () => {
                     </div>
                   );
                 })}
+                <div ref={messagesEndRef} />
               </div>
 
               <div className="flex gap-2">
-                <input
+                <textarea
                   type="text"
                   value={text}
                   onChange={(e) => setText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleSend();
+                    }
+                  }}
                   placeholder="Type a message"
-                  className="input input-bordered flex-1"
+                  className="textarea  flex-1"
                 />
                 <button onClick={handleSend} className="btn btn-primary">
                   Send
