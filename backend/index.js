@@ -6,7 +6,8 @@ import cookieParser from "cookie-parser";
 import http from "http";
 import { Server } from "socket.io";
 import connectDB from "./utils/db.js";
-
+import path from "path";
+import { fileURLToPath } from "url";
 // routes
 import authRoute from "./routes/auth.route.js";
 import postRoute from "./routes/post.route.js";
@@ -16,6 +17,9 @@ import messageRoute from "./routes/message.route.js";
 import notificationRoute from "./routes/notification.route.js";
 
 dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const server = http.createServer(app); // Use HTTP server
 const io = new Server(server, {
@@ -27,7 +31,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   })
 );
@@ -40,6 +44,15 @@ app.use("/api/bank", bankRoute);
 app.use("/api/searchFilter", searchFilterRoute);
 app.use("/api/messages", messageRoute);
 app.use("/api/notification", notificationRoute);
+
+if (process.env.NODE_ENV === "production") {
+  const frontendPath = path.resolve(__dirname, "../frontend/dist");
+  app.use(express.static(frontendPath));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+}
 
 // Store users and socket ids
 const users = new Map();
