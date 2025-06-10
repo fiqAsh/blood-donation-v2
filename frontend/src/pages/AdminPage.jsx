@@ -8,6 +8,7 @@ import BankMapCard from "../components/BankCard";
 import BankRequests from "../components/BankRequests";
 import UserNotifications from "../components/UserNotifications";
 import { useNotificationStore } from "../stores/useNotificationStore";
+
 const AdminPage = () => {
   const { user, checkingAuth } = useAuthStore();
   const { fetchBankData, bankRequests, fetchBankRequests } = useBankStore();

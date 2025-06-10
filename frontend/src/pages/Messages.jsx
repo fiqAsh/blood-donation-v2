@@ -7,7 +7,7 @@ import Loading from "../components/Loading";
 import { useLocation } from "react-router-dom";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true,
 });
 
@@ -26,18 +26,20 @@ const Messages = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 👇 Initialize Socket.IO and register user
   useEffect(() => {
     if (!user) return;
 
-    socket.current = io("http://localhost:3000", {
+    const SOCKET_URL =
+      import.meta.env.VITE_SOCKET_URL ||
+      import.meta.env.VITE_API_BASE_URL.replace("/api", "");
+
+    socket.current = io(SOCKET_URL, {
       withCredentials: true,
     });
 
     socket.current.emit("register", user.user._id);
 
     socket.current.on("receiveMessage", (message) => {
-      // Only add message if it's from the currently selected user
       if (
         message.senderId === selectedUser?._id ||
         message.receiverId === selectedUser?._id
@@ -51,7 +53,6 @@ const Messages = () => {
     };
   }, [user, selectedUser]);
 
-  // 👇 Fetch users
   useEffect(() => {
     if (!user) return;
 
@@ -63,7 +64,6 @@ const Messages = () => {
       );
   }, [user]);
 
-  // 👇 Auto-select user from ShowPost
   useEffect(() => {
     if (location.state?.selectedUser) {
       setSelectedUser(location.state.selectedUser);
@@ -71,7 +71,6 @@ const Messages = () => {
     }
   }, [location.state]);
 
-  // 👇 Fetch messages for selected user
   useEffect(() => {
     if (!selectedUser) return;
 
